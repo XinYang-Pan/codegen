@@ -16,7 +16,9 @@ class ClassWrapperParser {
 		if (parameterizedTypeStr == null) {
 			return new ClassWrapper(texts.getBefore(), null);
 		}
-		Iterable<String> parameterizedTypes = Splitter.on(',').trimResults().split(parameterizedTypeStr);
+		Iterable<String> parameterizedTypes = Splitter.on(',')
+			.trimResults()
+			.split(parameterizedTypeStr);
 		//
 		List<ClassWrapper> classWrappers = Lists.newArrayList();
 		for (String parameterizedType : parameterizedTypes) {
