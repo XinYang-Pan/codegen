@@ -1,6 +1,7 @@
 package io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.springframework.util.CollectionUtils;
@@ -9,7 +10,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
-public class ClassWrapper {
+import io.github.xinyangpan.codegen.util.Import;
+
+public class ClassWrapper implements Import {
 	private final String packageName;
 	private final String name;
 	private final List<ClassWrapper> parameterizedTypes;
@@ -53,7 +56,9 @@ public class ClassWrapper {
 	}
 
 	public static ClassWrapper of(String packageName, String className) {
-		return of(Joiner.on('.').skipNulls().join(packageName, className));
+		return of(Joiner.on('.')
+			.skipNulls()
+			.join(packageName, className));
 	}
 
 	public static ClassWrapper of(String classNameWithParameterizedTypes) {
@@ -73,7 +78,9 @@ public class ClassWrapper {
 	}
 
 	public String getFullName() {
-		return Joiner.on('.').skipNulls().join(packageName, name);
+		return Joiner.on('.')
+			.skipNulls()
+			.join(packageName, name);
 	}
 
 	public String getTypedName() {
@@ -82,10 +89,24 @@ public class ClassWrapper {
 			for (ClassWrapper wrapper : parameterizedTypes) {
 				names.add(wrapper.getName());
 			}
-			String parameterizedTypesuffix = Joiner.on(", ").join(names);
+			String parameterizedTypesuffix = Joiner.on(", ")
+				.join(names);
 			return String.format("%s<%s>", this.getName(), parameterizedTypesuffix);
 		} else {
 			return this.getName();
+		}
+	}
+
+	@Override
+	public void addImportsTo(Set<Class<?>> imports) {
+		Class<?> clazz = this.getClassIfPossible();
+		if (Import.isNeedImport(clazz)) {
+			imports.add(clazz);
+		}
+		if (!CollectionUtils.isEmpty(parameterizedTypes)) {
+			for (ClassWrapper wrapper : parameterizedTypes) {
+				wrapper.addImportsTo(imports);
+			}
 		}
 	}
 

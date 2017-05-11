@@ -1,50 +1,50 @@
 package io.github.xinyangpan.codegen.classfile.method;
 
 import java.util.List;
+import java.util.Set;
 
+import com.google.common.base.Defaults;
+import com.google.common.collect.Lists;
+
+import io.github.xinyangpan.codegen.classfile.AccessModifier;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.util.Import;
 
-public class MethodWrapper {
-	private AccessModifier accessModifier;
+public class MethodPart implements Import {
+	private AccessModifier accessModifier = AccessModifier.PUBLIC;
 	private String name;
-	private ClassWrapper returnClass;
-	private ClassWrapper throwClass;
+	private ClassWrapper returnClass = ClassWrapper.of(void.class);
+//	private List<ClassWrapper> throws;
 	private List<AnnotationWrapper<?>> annotations;
 	private List<ClassWrapper> parameters;
 	private String content;
 
-	public MethodWrapper() {
+	public MethodPart() {
 	}
 
-	public MethodWrapper(AccessModifier accessModifier, ClassWrapper returnClass, List<ClassWrapper> parameterList, String content) {
+	public MethodPart(ClassWrapper returnClass, ClassWrapper ... parameters) {
 		super();
-		this.accessModifier = accessModifier;
 		this.returnClass = returnClass;
-		this.parameters = parameterList;
-		this.content = content;
+		this.parameters = Lists.newArrayList(parameters);
 	}
-
-	public MethodWrapper(AccessModifier accessModifier, ClassWrapper returnClass, ClassWrapper throwClass, List<ClassWrapper> parameterList, String content) {
-		super();
-		this.accessModifier = accessModifier;
-		this.returnClass = returnClass;
-		this.throwClass = throwClass;
-		this.parameters = parameterList;
-		this.content = content;
+	
+	@Override
+	public void addImportsTo(Set<Class<?>> imports) {
+		Import.toAdd(imports, returnClass);
+		Import.toAdd(imports, annotations);
+		Import.toAdd(imports, parameters);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MethodWrapper [accessModifier=");
+		builder.append("MethodPart [accessModifier=");
 		builder.append(accessModifier);
 		builder.append(", name=");
 		builder.append(name);
 		builder.append(", returnClass=");
 		builder.append(returnClass);
-		builder.append(", throwClass=");
-		builder.append(throwClass);
 		builder.append(", annotations=");
 		builder.append(annotations);
 		builder.append(", parameterList=");
@@ -67,15 +67,10 @@ public class MethodWrapper {
 		return returnClass;
 	}
 
-	public ClassWrapper getThrowClass() {
-		return throwClass;
-	}
-
-	public void setThrowClass(ClassWrapper throwClass) {
-		this.throwClass = throwClass;
-	}
-
 	public String getContent() {
+		if (content == null && (returnClass.getClassIfPossible() != void.class)) {
+			return String.format("return %s;", Defaults.defaultValue(returnClass.getClassIfPossible()));
+		}
 		return content;
 	}
 

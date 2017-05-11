@@ -10,11 +10,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.TemplateHelper;
-import io.github.xinyangpan.codegen.classfile.method.MethodWrapper;
+import io.github.xinyangpan.codegen.classfile.method.MethodPart;
 import io.github.xinyangpan.codegen.pojo.bo.PojoClass;
 import io.github.xinyangpan.codegen.pojo.bo.PojoField;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.util.Import;
 
 public class ClassFile {
 	private String name;
@@ -23,37 +24,33 @@ public class ClassFile {
 	private LinkedHashSet<ClassWrapper> interfaces;
 	private List<AnnotationWrapper<PojoClass>> annotationWrappers;
 	private List<PojoField> pojoFields;
-	private List<MethodWrapper> methodWrappers;
+	private List<MethodPart> methodParts;
 
-	public Set<ClassWrapper> getImports() {
-		Set<ClassWrapper> classes = Sets.newHashSet();
-		if (interfaces != null) {
-			for (ClassWrapper interface_ : interfaces) {
-				classes.addAll(interface_.getImports());
-			}
-		}
-		if (annotationWrappers != null) {
-			for (AnnotationWrapper<PojoClass> annotationWrapper : annotationWrappers) {
-				classes.addAll(annotationWrapper.getImports());
-			}
-		}
-		if (pojoFields != null) {
-			for (PojoField pojoField : pojoFields) {
-				classes.addAll(pojoField.getImports());
-			}
-		}
-		if (superClass != null) {
-			classes.addAll(superClass.getImports());
-		}
-		return classes.stream().filter(classWrapper -> !classWrapper.getPackageName().startsWith("java.lang")).collect(Collectors.toSet());
+	public Set<Class<?>> getImports() {
+		Set<Class<?>> imports = Sets.newHashSet();
+
+		Import.toAdd(imports, interfaces);
+		Import.toAdd(imports, annotationWrappers);
+		Import.toAdd(imports, superClass);
+		
+		Import.toAdd(imports, methodParts);
+		Import.toAdd(imports, annotationWrappers);
+		
+//		if (pojoFields != null) {
+//			for (PojoField pojoField : pojoFields) {
+//				Import.toAdd(imports, pojoField.);
+//				classes.addAll(pojoField.getImports());
+//			}
+//		}
+		return imports;
 	}
-
+	
 	public List<String> getMethodTexts() {
 		try {
 			List<String> methodTexts = Lists.newArrayList();
-			for (MethodWrapper methodWrapper : methodWrappers) {
+			for (MethodPart methodPart : methodParts) {
 				StringWriter sw = new StringWriter();
-				TemplateHelper.getInstance().getMethodTemplate().process(methodWrapper, sw);
+				TemplateHelper.getInstance().getMethodTemplate().process(methodPart, sw);
 				methodTexts.add(sw.toString());
 			}
 			return methodTexts;
@@ -129,12 +126,12 @@ public class ClassFile {
 		this.pojoFields = pojoFields;
 	}
 
-	public List<MethodWrapper> getMethodWrappers() {
-		return methodWrappers;
+	public List<MethodPart> getMethodWrappers() {
+		return methodParts;
 	}
 
-	public void setMethodWrappers(List<MethodWrapper> methods) {
-		this.methodWrappers = methods;
+	public void setMethodWrappers(List<MethodPart> methods) {
+		this.methodParts = methods;
 	}
 
 }

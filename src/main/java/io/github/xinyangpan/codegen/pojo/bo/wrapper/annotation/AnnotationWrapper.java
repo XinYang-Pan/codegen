@@ -2,12 +2,14 @@ package io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.base.Function;
 
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.util.Import;
 
-public class AnnotationWrapper<T> {
+public class AnnotationWrapper<T> implements Import {
 	protected final ClassWrapper classWrapper;
 	// should be BiFunction in JDK 8
 	protected final Function<T, String> function;
@@ -64,7 +66,12 @@ public class AnnotationWrapper<T> {
 	public List<ClassWrapper> getImports() {
 		return classWrapper.getImports();
 	}
-
+	
+	@Override
+	public void addImportsTo(Set<Class<?>> imports) {
+		classWrapper.addImportsTo(imports);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

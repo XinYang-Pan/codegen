@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.classfile.method;
+package io.github.xinyangpan.codegen.classfile;
 
 import com.google.common.base.Preconditions;
 
