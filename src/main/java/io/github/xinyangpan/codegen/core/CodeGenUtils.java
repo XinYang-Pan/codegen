@@ -9,9 +9,7 @@ public abstract class CodeGenUtils {
 	public static boolean isSetMethod(Method method) {
 		String methodName = method.getName();
 		Class<?>[] parameters = method.getParameterTypes();
-		return methodName.startsWith("set")
-			&& ArrayUtils.getLength(parameters) == 1
-			&& (void.class == method.getReturnType() || Void.class == method.getReturnType());
+		return methodName.startsWith("set") && ArrayUtils.getLength(parameters) == 1 && (void.class == method.getReturnType() || Void.class == method.getReturnType());
 	}
 
 	public static boolean isGetMethod(Method method) {

@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoClass;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoField;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoField.AnnotationType;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.commons.FormatterWrapper;
 
 public class JavaFileGenerator {

@@ -16,7 +16,7 @@ import freemarker.template.Template;
 import io.github.xinyangpan.codegen.classfile.ClassFile;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.converter.converter.SetGetMethodBased;
 import io.github.xinyangpan.codegen.core.template.TemplateHelper;
 

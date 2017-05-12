@@ -1,11 +1,10 @@
-package io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation;
+package io.github.xinyangpan.codegen.classfile.wrapper;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 
 public class AnnotationWrapper implements Import {

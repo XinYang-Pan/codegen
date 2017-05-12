@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz;
+package io.github.xinyangpan.codegen.classfile.wrapper;
 
 import java.util.List;
 import java.util.Set;
@@ -7,10 +7,13 @@ import org.apache.commons.lang3.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import io.github.xinyangpan.codegen.core.Import;
+import io.github.xinyangpan.commons.ContentPiece;
+import io.github.xinyangpan.commons.StringUtils;
 
 public class ClassWrapper implements Import {
 	private final String packageName;
@@ -56,13 +59,26 @@ public class ClassWrapper implements Import {
 	}
 
 	public static ClassWrapper of(String packageName, String className) {
-		return of(Joiner.on('.')
-			.skipNulls()
-			.join(packageName, className));
+		return of(Joiner.on('.').skipNulls().join(packageName, className));
 	}
 
 	public static ClassWrapper of(String classNameWithParameterizedTypes) {
-		return ClassWrapperParser.parse(classNameWithParameterizedTypes);
+		return parse(classNameWithParameterizedTypes);
+	}
+
+	private static ClassWrapper parse(String classNameWithParameterizedTypes) {
+		ContentPiece texts = StringUtils.splitContent(classNameWithParameterizedTypes, '<', '>');
+		String parameterizedTypeStr = texts.getTarget();
+		if (parameterizedTypeStr == null) {
+			return new ClassWrapper(texts.getBefore(), null);
+		}
+		Iterable<String> parameterizedTypes = Splitter.on(',').trimResults().split(parameterizedTypeStr);
+		//
+		List<ClassWrapper> classWrappers = Lists.newArrayList();
+		for (String parameterizedType : parameterizedTypes) {
+			classWrappers.add(parse(parameterizedType));
+		}
+		return new ClassWrapper(texts.getBefore(), classWrappers);
 	}
 
 	// -----------------------------
@@ -78,9 +94,7 @@ public class ClassWrapper implements Import {
 	}
 
 	public String getFullName() {
-		return Joiner.on('.')
-			.skipNulls()
-			.join(packageName, name);
+		return Joiner.on('.').skipNulls().join(packageName, name);
 	}
 
 	public String getTypedName() {
@@ -89,8 +103,7 @@ public class ClassWrapper implements Import {
 			for (ClassWrapper wrapper : parameterizedTypes) {
 				names.add(wrapper.getName());
 			}
-			String parameterizedTypesuffix = Joiner.on(", ")
-				.join(names);
+			String parameterizedTypesuffix = Joiner.on(", ").join(names);
 			return String.format("%s<%s>", this.getName(), parameterizedTypesuffix);
 		} else {
 			return this.getName();

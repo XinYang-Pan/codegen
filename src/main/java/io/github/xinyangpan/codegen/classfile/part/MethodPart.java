@@ -9,7 +9,7 @@ import com.google.common.base.Defaults;
 import com.google.common.collect.Lists;
 
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 
 public class MethodPart extends ClassDeclarePart {

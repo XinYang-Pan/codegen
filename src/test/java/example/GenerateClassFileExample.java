@@ -14,8 +14,8 @@ import io.github.xinyangpan.codegen.classfile.ClassFile;
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
 public class GenerateClassFileExample {
 

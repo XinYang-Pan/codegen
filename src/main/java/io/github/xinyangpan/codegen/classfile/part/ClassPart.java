@@ -7,8 +7,8 @@ import java.util.Set;
 
 import com.google.common.collect.Lists;
 
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 
 public class ClassPart implements Import {
