@@ -12,7 +12,7 @@ import com.google.common.collect.Sets;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
-public class PojoClass extends ValueMapObject {
+public class PojoClass {
 	private String name;
 	private String packageName;
 	private ClassWrapper superClass;

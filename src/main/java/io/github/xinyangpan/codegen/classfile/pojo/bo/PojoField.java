@@ -14,7 +14,7 @@ import com.google.common.collect.Sets;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
-public class PojoField extends ValueMapObject {
+public class PojoField {
 	public enum AnnotationType {
 		Field, Get, Set
 	}
