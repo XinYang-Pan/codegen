@@ -93,10 +93,10 @@ public class JavaFileGenerator {
 
 	protected void generateClassDeclarationCode() {
 		// annotation lines
-		List<AnnotationWrapper<PojoClass>> annotationWrappers = pojoClass.getAnnotationWrappers();
+		List<AnnotationWrapper> annotationWrappers = pojoClass.getAnnotationWrappers();
 		if (annotationWrappers != null) {
-			for (AnnotationWrapper<PojoClass> annotationWrapper : annotationWrappers) {
-				formatterWrapper.formatln(annotationWrapper.getDisplayString(pojoClass));
+			for (AnnotationWrapper annotationWrapper : annotationWrappers) {
+				formatterWrapper.formatln(annotationWrapper.getDisplayString());
 			}
 		}
 		// Suppress Serial Warnings
@@ -210,9 +210,9 @@ public class JavaFileGenerator {
 	}
 
 	protected void generateAnnotation(PojoField pojoField, AnnotationType annotationType) {
-		List<AnnotationWrapper<PojoField>> annotationWrappers = pojoField.getAnnotationWrappers(annotationType);
-		for (AnnotationWrapper<PojoField> annotationWrapper : annotationWrappers) {
-			formatterWrapper.formatln(1, annotationWrapper.getDisplayString(pojoField));
+		List<AnnotationWrapper> annotationWrappers = pojoField.getAnnotationWrappers(annotationType);
+		for (AnnotationWrapper annotationWrapper : annotationWrappers) {
+			formatterWrapper.formatln(1, annotationWrapper.getDisplayString());
 		}
 	}
 

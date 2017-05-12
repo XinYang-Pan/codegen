@@ -1,18 +1,18 @@
 package io.github.xinyangpan.codegen.classfile;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 import java.io.StringWriter;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.TemplateHelper;
+import io.github.xinyangpan.codegen.classfile.field.FieldPart;
 import io.github.xinyangpan.codegen.classfile.method.MethodPart;
-import io.github.xinyangpan.codegen.pojo.bo.PojoClass;
-import io.github.xinyangpan.codegen.pojo.bo.PojoField;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.codegen.util.Import;
@@ -22,43 +22,48 @@ public class ClassFile {
 	private String packageName;
 	private ClassWrapper superClass;
 	private LinkedHashSet<ClassWrapper> interfaces;
-	private List<AnnotationWrapper<PojoClass>> annotationWrappers;
-	private List<PojoField> pojoFields;
+	private List<AnnotationWrapper> annotationWrappers;
+	private List<FieldPart> fieldParts;
 	private List<MethodPart> methodParts;
 
 	public Set<Class<?>> getImports() {
 		Set<Class<?>> imports = Sets.newHashSet();
-
 		Import.toAdd(imports, interfaces);
 		Import.toAdd(imports, annotationWrappers);
 		Import.toAdd(imports, superClass);
-		
 		Import.toAdd(imports, methodParts);
 		Import.toAdd(imports, annotationWrappers);
-		
-//		if (pojoFields != null) {
-//			for (PojoField pojoField : pojoFields) {
-//				Import.toAdd(imports, pojoField.);
-//				classes.addAll(pojoField.getImports());
-//			}
-//		}
 		return imports;
 	}
-	
-	public List<String> getMethodTexts() {
+
+	public List<String> getFieldTexts() {
 		try {
-			List<String> methodTexts = Lists.newArrayList();
-			for (MethodPart methodPart : methodParts) {
+			List<String> texts = Lists.newArrayList();
+			for (FieldPart part : emptyIfNull(fieldParts)) {
 				StringWriter sw = new StringWriter();
-				TemplateHelper.getInstance().getMethodTemplate().process(methodPart, sw);
-				methodTexts.add(sw.toString());
+				TemplateHelper.getInstance().getFieldTemplate().process(part, sw);
+				texts.add(sw.toString());
 			}
-			return methodTexts;
+			return texts;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	public List<String> getMethodTexts() {
+		try {
+			List<String> texts = Lists.newArrayList();
+			for (MethodPart part : emptyIfNull(methodParts)) {
+				StringWriter sw = new StringWriter();
+				TemplateHelper.getInstance().getMethodTemplate().process(part, sw);
+				texts.add(sw.toString());
+			}
+			return texts;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -72,8 +77,10 @@ public class ClassFile {
 		builder.append(interfaces);
 		builder.append(", annotationWrappers=");
 		builder.append(annotationWrappers);
-		builder.append(", pojoFields=");
-		builder.append(pojoFields);
+		builder.append(", fieldParts=");
+		builder.append(fieldParts);
+		builder.append(", methodParts=");
+		builder.append(methodParts);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -110,28 +117,28 @@ public class ClassFile {
 		this.interfaces = interfaces;
 	}
 
-	public List<AnnotationWrapper<PojoClass>> getAnnotationWrappers() {
+	public List<AnnotationWrapper> getAnnotationWrappers() {
 		return annotationWrappers;
 	}
 
-	public void setAnnotationWrappers(List<AnnotationWrapper<PojoClass>> annotationWrappers) {
+	public void setAnnotationWrappers(List<AnnotationWrapper> annotationWrappers) {
 		this.annotationWrappers = annotationWrappers;
 	}
 
-	public List<PojoField> getPojoFields() {
-		return pojoFields;
+	public List<FieldPart> getFieldParts() {
+		return fieldParts;
 	}
 
-	public void setPojoFields(List<PojoField> pojoFields) {
-		this.pojoFields = pojoFields;
+	public void setFieldParts(List<FieldPart> fieldParts) {
+		this.fieldParts = fieldParts;
 	}
 
-	public List<MethodPart> getMethodWrappers() {
+	public List<MethodPart> getMethodParts() {
 		return methodParts;
 	}
 
-	public void setMethodWrappers(List<MethodPart> methods) {
-		this.methodParts = methods;
+	public void setMethodParts(List<MethodPart> methodParts) {
+		this.methodParts = methodParts;
 	}
 
 }

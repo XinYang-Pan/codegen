@@ -7,103 +7,69 @@ import com.google.common.base.Defaults;
 import com.google.common.collect.Lists;
 
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.ClassPart;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.codegen.util.Import;
 
-public class MethodPart implements Import {
-	private AccessModifier accessModifier = AccessModifier.PUBLIC;
-	private String name;
-	private ClassWrapper returnClass = ClassWrapper.of(void.class);
+public class MethodPart extends ClassPart {
 //	private List<ClassWrapper> throws;
-	private List<AnnotationWrapper<?>> annotations;
 	private List<ClassWrapper> parameters;
 	private String content;
 
 	public MethodPart() {
+		this.accessModifier = AccessModifier.PUBLIC;
+		this.type = ClassWrapper.of(void.class);
 	}
 
-	public MethodPart(ClassWrapper returnClass, ClassWrapper ... parameters) {
-		super();
-		this.returnClass = returnClass;
+	public MethodPart(String name, ClassWrapper returnType, ClassWrapper... parameters) {
+		this();
+		this.setName(name);
+		this.setType(returnType);
 		this.parameters = Lists.newArrayList(parameters);
 	}
-	
+
 	@Override
-	public void addImportsTo(Set<Class<?>> imports) {
-		Import.toAdd(imports, returnClass);
-		Import.toAdd(imports, annotations);
-		Import.toAdd(imports, parameters);
+	public void addImportsTo(Set<Class<?>> targetSet) {
+		super.addImportsTo(targetSet);
+		Import.toAdd(targetSet, parameters);
+	}
+
+	public String getContent() {
+		if (content == null && (type.getClassIfPossible() != void.class)) {
+			return String.format("return %s;", Defaults.defaultValue(type.getClassIfPossible()));
+		}
+		return content;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MethodPart [accessModifier=");
-		builder.append(accessModifier);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", returnClass=");
-		builder.append(returnClass);
-		builder.append(", annotations=");
-		builder.append(annotations);
-		builder.append(", parameterList=");
+		builder.append("MethodPart [parameters=");
 		builder.append(parameters);
 		builder.append(", content=");
 		builder.append(content);
+		builder.append(", accessModifier=");
+		builder.append(accessModifier);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", annotationWrapper=");
+		builder.append(annotationWrapper);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public AccessModifier getAccessModifier() {
-		return accessModifier;
-	}
-
-	public void setAccessModifier(AccessModifier accessModifier) {
-		this.accessModifier = accessModifier;
-	}
-
-	public ClassWrapper getReturnClass() {
-		return returnClass;
-	}
-
-	public String getContent() {
-		if (content == null && (returnClass.getClassIfPossible() != void.class)) {
-			return String.format("return %s;", Defaults.defaultValue(returnClass.getClassIfPossible()));
-		}
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public void setReturnClass(ClassWrapper returnClass) {
-		this.returnClass = returnClass;
 	}
 
 	public List<ClassWrapper> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(List<ClassWrapper> parameterList) {
-		this.parameters = parameterList;
+	public void setParameters(List<ClassWrapper> parameters) {
+		this.parameters = parameters;
 	}
 
-	public List<AnnotationWrapper<?>> getAnnotations() {
-		return annotations;
-	}
-
-	public void setAnnotations(List<AnnotationWrapper<?>> annotations) {
-		this.annotations = annotations;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

@@ -7,11 +7,10 @@ import javax.persistence.Enumerated;
 
 import com.google.common.collect.Lists;
 
-import io.github.xinyangpan.codegen.pojo.bo.PojoField;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.FieldAnnotationWrapper;
+import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 
-public class EnumeratedWrapper extends FieldAnnotationWrapper {
+public class EnumeratedWrapper extends AnnotationWrapper {
 	
 	private EnumType enumType;
 	
@@ -21,7 +20,7 @@ public class EnumeratedWrapper extends FieldAnnotationWrapper {
 	}
 
 	@Override
-	public String getDisplayString(PojoField pojoField) {
+	public String getDisplayString() {
 		String extra = "";
 		if (enumType != null) {
 			extra = String.format("(%s.%s)", EnumType.class.getSimpleName(), enumType.name());

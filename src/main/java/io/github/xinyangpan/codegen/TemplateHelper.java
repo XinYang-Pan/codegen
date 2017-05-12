@@ -9,8 +9,10 @@ public class TemplateHelper {
 	private static TemplateHelper instance;
 	// 
 	private String classTemplateFile = "class.ftlh";
+	private String fieldTemplateFile = "field.ftlh";
 	private String methodTemplateFile = "method.ftlh";
 	private Template classTemplate;
+	private Template fieldTemplate;
 	private Template methodTemplate;
 
 	private TemplateHelper() {
@@ -28,6 +30,7 @@ public class TemplateHelper {
 		try {
 			Configuration configuration = configuration();
 			classTemplate = configuration.getTemplate(classTemplateFile);
+			fieldTemplate = configuration.getTemplate(fieldTemplateFile);
 			methodTemplate = configuration.getTemplate(methodTemplateFile);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -101,6 +104,14 @@ public class TemplateHelper {
 
 	public void setMethodTemplate(Template methodTemplate) {
 		this.methodTemplate = methodTemplate;
+	}
+
+	public Template getFieldTemplate() {
+		return fieldTemplate;
+	}
+
+	public void setFieldTemplate(Template fieldTemplate) {
+		this.fieldTemplate = fieldTemplate;
 	}
 
 }

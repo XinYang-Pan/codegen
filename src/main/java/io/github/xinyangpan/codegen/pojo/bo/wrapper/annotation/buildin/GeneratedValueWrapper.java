@@ -7,11 +7,10 @@ import javax.persistence.GenerationType;
 
 import com.google.common.collect.Lists;
 
-import io.github.xinyangpan.codegen.pojo.bo.PojoField;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.FieldAnnotationWrapper;
+import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 
-public class GeneratedValueWrapper extends FieldAnnotationWrapper {
+public class GeneratedValueWrapper extends AnnotationWrapper {
 
 	private GenerationType generationType;
 	private String name;
@@ -23,7 +22,7 @@ public class GeneratedValueWrapper extends FieldAnnotationWrapper {
 	}
 
 	@Override
-	public String getDisplayString(PojoField pojoField) {
+	public String getDisplayString() {
 		return String.format("@GeneratedValue(strategy=GenerationType.%s, generator=\"%s\")", generationType.name(), name);
 	}
 	

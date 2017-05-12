@@ -10,7 +10,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapperUtils;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 
 public class PojoClass extends ValueMapObject {
@@ -18,7 +17,7 @@ public class PojoClass extends ValueMapObject {
 	private String packageName;
 	private ClassWrapper superClass;
 	private LinkedHashSet<ClassWrapper> interfaces;
-	private List<AnnotationWrapper<PojoClass>> annotationWrappers;
+	private List<AnnotationWrapper> annotationWrappers;
 	private List<PojoField> pojoFields;
 
 	public Set<ClassWrapper> getImports() {
@@ -29,7 +28,7 @@ public class PojoClass extends ValueMapObject {
 			}
 		}
 		if (annotationWrappers != null) {
-			for (AnnotationWrapper<PojoClass> annotationWrapper : annotationWrappers) {
+			for (AnnotationWrapper annotationWrapper : annotationWrappers) {
 				classes.addAll(annotationWrapper.getImports());
 			}
 		}
@@ -72,12 +71,12 @@ public class PojoClass extends ValueMapObject {
 		if (annotation == null) {
 			return this;
 		}
-		AnnotationWrapper<PojoClass> wrapper = AnnotationWrapperUtils.simpleWrapper(annotation);
+		AnnotationWrapper wrapper = new AnnotationWrapper(annotation);
 		this.addAnnotationWrapper(wrapper);
 		return this;
 	}
 
-	public PojoClass addAnnotationWrapper(AnnotationWrapper<PojoClass> annotationWrapper) {
+	public PojoClass addAnnotationWrapper(AnnotationWrapper annotationWrapper) {
 		if (annotationWrapper == null) {
 			return this;
 		}
@@ -88,11 +87,11 @@ public class PojoClass extends ValueMapObject {
 		return this;
 	}
 
-	public void addAnnotationWrappers(AnnotationWrapper<PojoClass>[] annotationWrappers) {
+	public void addAnnotationWrappers(AnnotationWrapper[] annotationWrappers) {
 		if (annotationWrappers == null) {
 			return;
 		}
-		for (AnnotationWrapper<PojoClass> wrapper : annotationWrappers) {
+		for (AnnotationWrapper wrapper : annotationWrappers) {
 			this.addAnnotationWrapper(wrapper);
 		}
 	}
@@ -135,11 +134,11 @@ public class PojoClass extends ValueMapObject {
 		this.interfaces = interfaces;
 	}
 
-	public List<AnnotationWrapper<PojoClass>> getAnnotationWrappers() {
+	public List<AnnotationWrapper> getAnnotationWrappers() {
 		return annotationWrappers;
 	}
 
-	public void setAnnotationWrappers(List<AnnotationWrapper<PojoClass>> annotationWrappers) {
+	public void setAnnotationWrappers(List<AnnotationWrapper> annotationWrappers) {
 		this.annotationWrappers = annotationWrappers;
 	}
 

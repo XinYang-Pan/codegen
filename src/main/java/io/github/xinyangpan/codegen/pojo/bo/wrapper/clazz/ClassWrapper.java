@@ -98,14 +98,14 @@ public class ClassWrapper implements Import {
 	}
 
 	@Override
-	public void addImportsTo(Set<Class<?>> imports) {
+	public void addImportsTo(Set<Class<?>> targetSet) {
 		Class<?> clazz = this.getClassIfPossible();
 		if (Import.isNeedImport(clazz)) {
-			imports.add(clazz);
+			targetSet.add(clazz);
 		}
 		if (!CollectionUtils.isEmpty(parameterizedTypes)) {
 			for (ClassWrapper wrapper : parameterizedTypes) {
-				wrapper.addImportsTo(imports);
+				wrapper.addImportsTo(targetSet);
 			}
 		}
 	}

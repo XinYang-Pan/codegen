@@ -1,6 +1,7 @@
 package io.github.xinyangpan.codegen;
 
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import org.springframework.core.convert.converter.Converter;
@@ -13,7 +14,9 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import io.github.xinyangpan.codegen.classfile.ClassFile;
+import io.github.xinyangpan.codegen.classfile.field.FieldPart;
 import io.github.xinyangpan.codegen.classfile.method.MethodPart;
+import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 
 public class CodeGenTestMain {
@@ -22,15 +25,18 @@ public class CodeGenTestMain {
 		Configuration cfg = configuration();
 		
 		//
-		MethodPart methodPart = new MethodPart(ClassWrapper.of(Integer.class), ClassWrapper.of(String.class));
-		methodPart.setName("convert");
+		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(Integer.class), ClassWrapper.of(String.class));
 //		cfg.getTemplate("method.ftlh").process(methodWrapper, new OutputStreamWriter(System.out));;
-		
+		FieldPart fieldPart = new FieldPart(ClassWrapper.of(int.class), "id");
+		AnnotationWrapper annotationWrapper = new AnnotationWrapper(SuppressWarnings.class, "(\"unused\")");
+		ArrayList<AnnotationWrapper> newArrayList = Lists.newArrayList(annotationWrapper);
+		fieldPart.setAnnotationWrapper(newArrayList);
 		//
 		ClassFile classFile = new ClassFile();
 		classFile.setPackageName("io.github.xinyangpan.test");
 		classFile.setName("Test");
-		classFile.setMethodWrappers(Lists.newArrayList(methodPart));
+		classFile.setMethodParts(Lists.newArrayList(methodPart));
+		classFile.setFieldParts(Lists.newArrayList(fieldPart));
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Converter.class, String.class, Integer.class));
 		classFile.setInterfaces(interfaces);

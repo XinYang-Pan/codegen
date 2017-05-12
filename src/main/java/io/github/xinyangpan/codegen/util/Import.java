@@ -9,7 +9,7 @@ import com.google.common.base.Preconditions;
 
 public interface Import {
 
-	void addImportsTo(Set<Class<?>> imports);
+	void addImportsTo(Set<Class<?>> targetSet);
 
 	public static void toAdd(Set<Class<?>> targetSet, Collection<? extends Import> imports) {
 		Preconditions.checkNotNull(targetSet);

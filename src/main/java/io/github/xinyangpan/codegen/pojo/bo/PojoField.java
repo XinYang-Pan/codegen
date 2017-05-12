@@ -12,7 +12,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapperUtils;
 import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
 
 public class PojoField extends ValueMapObject {
@@ -22,38 +21,38 @@ public class PojoField extends ValueMapObject {
 
 	private String name;
 	private ClassWrapper type;
-	private Map<AnnotationType, List<AnnotationWrapper<PojoField>>> annotationWrapperMap;
+	private Map<AnnotationType, List<AnnotationWrapper>> annotationWrapperMap;
 
 	public PojoField addAnnotation(AnnotationType annotationType, Class<? extends Annotation> annotation) {
 		Preconditions.checkNotNull(annotationType);
 		Preconditions.checkNotNull(annotation);
 		// 
-		AnnotationWrapper<PojoField> wrapper = AnnotationWrapperUtils.simpleWrapper(annotation);
+		AnnotationWrapper wrapper = new AnnotationWrapper(annotation);
 		this.addAnnotationWrapper(annotationType, wrapper);
 		return this;
 	}
 
-	public void addAnnotationWrapper(AnnotationType annotationType, AnnotationWrapper<PojoField> annotationWrapper) {
+	public void addAnnotationWrapper(AnnotationType annotationType, AnnotationWrapper annotationWrapper) {
 		Preconditions.checkNotNull(annotationType);
 		Preconditions.checkNotNull(annotationWrapper);
 		// 
 		if (annotationWrapperMap == null) {
 			annotationWrapperMap = Maps.newHashMap();
 		}
-		List<AnnotationWrapper<PojoField>> list = annotationWrapperMap.get(annotationType);
+		List<AnnotationWrapper> list = annotationWrapperMap.get(annotationType);
 		if (list == null) {
 			annotationWrapperMap.put(annotationType, list = Lists.newArrayList());
 		}
 		list.add(annotationWrapper);
 	}
 
-	public List<AnnotationWrapper<PojoField>> getAnnotationWrappers(AnnotationType annotationType) {
+	public List<AnnotationWrapper> getAnnotationWrappers(AnnotationType annotationType) {
 		Preconditions.checkNotNull(annotationType);
 		// 
 		if (annotationWrapperMap == null) {
 			return Collections.emptyList();
 		}
-		List<AnnotationWrapper<PojoField>> list = annotationWrapperMap.get(annotationType);
+		List<AnnotationWrapper> list = annotationWrapperMap.get(annotationType);
 		if (list == null) {
 			return Collections.emptyList();
 		}
@@ -63,8 +62,8 @@ public class PojoField extends ValueMapObject {
 	public Set<ClassWrapper> getImports() {
 		Set<ClassWrapper> classes = Sets.newHashSet();
 		if (annotationWrapperMap != null) {
-			for (List<AnnotationWrapper<PojoField>> annotationWrappers : annotationWrapperMap.values()) {
-				for (AnnotationWrapper<PojoField> annotationWrapper : annotationWrappers) {
+			for (List<AnnotationWrapper> annotationWrappers : annotationWrapperMap.values()) {
+				for (AnnotationWrapper annotationWrapper : annotationWrappers) {
 					classes.addAll(annotationWrapper.getImports());
 				}
 			}
@@ -98,7 +97,7 @@ public class PojoField extends ValueMapObject {
 		this.name = name;
 	}
 
-	public Map<AnnotationType, List<AnnotationWrapper<PojoField>>> getAnnotationWrapperMap() {
+	public Map<AnnotationType, List<AnnotationWrapper>> getAnnotationWrapperMap() {
 		return annotationWrapperMap;
 	}
 
