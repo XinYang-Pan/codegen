@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.pojo;
+package io.github.xinyangpan.codegen.classfile.pojo;
 
 import java.io.Serializable;
 import java.util.Formatter;
@@ -10,11 +10,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import io.github.xinyangpan.codegen.pojo.bo.PojoClass;
-import io.github.xinyangpan.codegen.pojo.bo.PojoField;
-import io.github.xinyangpan.codegen.pojo.bo.PojoField.AnnotationType;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoClass;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoField;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoField.AnnotationType;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.commons.FormatterWrapper;
 
 public class JavaFileGenerator {

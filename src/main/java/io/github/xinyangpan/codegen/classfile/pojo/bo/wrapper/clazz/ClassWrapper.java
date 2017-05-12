@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz;
+package io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz;
 
 import java.util.List;
 import java.util.Set;
@@ -10,7 +10,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
-import io.github.xinyangpan.codegen.util.Import;
+import io.github.xinyangpan.codegen.core.Import;
 
 public class ClassWrapper implements Import {
 	private final String packageName;

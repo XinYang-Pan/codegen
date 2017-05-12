@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.buildin;
+package io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.buildin;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import javax.persistence.Enumerated;
 
 import com.google.common.collect.Lists;
 
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 
 public class EnumeratedWrapper extends AnnotationWrapper {
 	

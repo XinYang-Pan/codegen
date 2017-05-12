@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 import com.google.common.base.Defaults;
 import com.google.common.base.Objects;
 
-import io.github.xinyangpan.codegen.util.CodeGenUtils;
+import io.github.xinyangpan.codegen.core.CodeGenUtils;
 import io.github.xinyangpan.commons.FormatterWrapper;
 
 public class SetGetMethodBased extends SetGetGenerator {

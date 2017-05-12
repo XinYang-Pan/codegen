@@ -1,8 +1,8 @@
-package io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.buildin;
+package io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.buildin;
 
 import javax.persistence.Column;
 
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
 
 public class ColumnWrapper extends AnnotationWrapper {
 

@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.pojo.bo;
+package io.github.xinyangpan.codegen.classfile.pojo.bo;
 
 import java.util.Map;
 

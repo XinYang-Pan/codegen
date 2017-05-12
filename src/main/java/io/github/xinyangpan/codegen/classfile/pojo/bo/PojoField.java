@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.pojo.bo;
+package io.github.xinyangpan.codegen.classfile.pojo.bo;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;
@@ -11,8 +11,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 
 public class PojoField extends ValueMapObject {
 	public enum AnnotationType {

@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.util;
+package io.github.xinyangpan.codegen.core;
 
 import java.lang.reflect.Method;
 

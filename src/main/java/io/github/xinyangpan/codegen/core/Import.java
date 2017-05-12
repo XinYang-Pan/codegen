@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.util;
+package io.github.xinyangpan.codegen.core;
 
 import java.util.Collection;
 import java.util.Set;

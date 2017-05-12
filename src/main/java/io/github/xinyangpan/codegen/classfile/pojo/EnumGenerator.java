@@ -1,10 +1,10 @@
-package io.github.xinyangpan.codegen.pojo;
+package io.github.xinyangpan.codegen.classfile.pojo;
 
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import io.github.xinyangpan.codegen.pojo.bo.PojoClass;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.PojoClass;
 import io.github.xinyangpan.commons.FormatterWrapper;
 
 public class EnumGenerator extends JavaFileGenerator {

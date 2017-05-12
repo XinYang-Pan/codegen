@@ -10,12 +10,12 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import io.github.xinyangpan.codegen.TemplateHelper;
-import io.github.xinyangpan.codegen.classfile.field.FieldPart;
-import io.github.xinyangpan.codegen.classfile.method.MethodPart;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.annotation.AnnotationWrapper;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
-import io.github.xinyangpan.codegen.util.Import;
+import io.github.xinyangpan.codegen.classfile.part.FieldPart;
+import io.github.xinyangpan.codegen.classfile.part.MethodPart;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.core.Import;
+import io.github.xinyangpan.codegen.core.template.TemplateHelper;
 
 public class ClassFile {
 	private String name;

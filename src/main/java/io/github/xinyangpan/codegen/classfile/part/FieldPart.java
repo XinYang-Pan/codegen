@@ -1,8 +1,7 @@
-package io.github.xinyangpan.codegen.classfile.field;
+package io.github.xinyangpan.codegen.classfile.part;
 
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
-import io.github.xinyangpan.codegen.classfile.ClassPart;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 
 public class FieldPart extends ClassPart {
 	

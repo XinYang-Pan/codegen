@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz;
+package io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz;
 
 import java.util.List;
 

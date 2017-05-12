@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.classfile.method;
+package io.github.xinyangpan.codegen.classfile.part;
 
 import java.util.List;
 import java.util.Set;
@@ -7,9 +7,8 @@ import com.google.common.base.Defaults;
 import com.google.common.collect.Lists;
 
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
-import io.github.xinyangpan.codegen.classfile.ClassPart;
-import io.github.xinyangpan.codegen.pojo.bo.wrapper.clazz.ClassWrapper;
-import io.github.xinyangpan.codegen.util.Import;
+import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
+import io.github.xinyangpan.codegen.core.Import;
 
 public class MethodPart extends ClassPart {
 //	private List<ClassWrapper> throws;
