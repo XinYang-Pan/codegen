@@ -12,8 +12,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import io.github.xinyangpan.codegen.core.Import;
+import io.github.xinyangpan.commons.CommonUtils;
 import io.github.xinyangpan.commons.ContentPiece;
-import io.github.xinyangpan.commons.StringUtils;
 
 public class ClassWrapper implements Import {
 	private final String packageName;
@@ -67,7 +67,7 @@ public class ClassWrapper implements Import {
 	}
 
 	private static ClassWrapper parse(String classNameWithParameterizedTypes) {
-		ContentPiece texts = StringUtils.splitContent(classNameWithParameterizedTypes, '<', '>');
+		ContentPiece texts = CommonUtils.splitContent(classNameWithParameterizedTypes, '<', '>');
 		String parameterizedTypeStr = texts.getTarget();
 		if (parameterizedTypeStr == null) {
 			return new ClassWrapper(texts.getBefore(), null);
