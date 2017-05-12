@@ -3,6 +3,7 @@ package io.github.xinyangpan.codegen.classfile;
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class ClassFile {
 	private List<FieldPart> fieldParts;
 	private List<MethodPart> methodParts;
 
-	public Set<Class<?>> getImports() {
+	public Collection<Class<?>> getImports() {
 		Set<Class<?>> imports = Sets.newHashSet();
 		Import.toAdd(imports, interfaces);
 		Import.toAdd(imports, annotationWrappers);
