@@ -16,10 +16,10 @@ import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 
-public class CodeGenTestMain {
-	
+public class GenerateClassFileExample {
+
 	public static void main(String[] args) throws Exception {
-		
+
 		//
 		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(Integer.class), ClassWrapper.of(String.class));
 		FieldPart fieldPart = new FieldPart(ClassWrapper.of(int.class), "id");
@@ -35,8 +35,7 @@ public class CodeGenTestMain {
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Converter.class, String.class, Integer.class));
 		classFile.setInterfaces(interfaces);
-		Tools.generateClassFile(classFile, new OutputStreamWriter(System.out));;
+		Tools.generateClassFile(classFile, new OutputStreamWriter(System.out));
 	}
 
-	
 }

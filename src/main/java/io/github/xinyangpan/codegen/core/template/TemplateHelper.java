@@ -1,6 +1,6 @@
 package io.github.xinyangpan.codegen.core.template;
 
-import example.CodeGenTestMain;
+import example.GenerateClassFileExample;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -36,7 +36,7 @@ public class TemplateHelper {
 	private static Configuration configuration() {
 		if (CONFIGURATION == null) {
 			CONFIGURATION = new Configuration(Configuration.VERSION_2_3_23);
-			ClassTemplateLoader classTemplateLoader = new ClassTemplateLoader(CodeGenTestMain.class, "/template");
+			ClassTemplateLoader classTemplateLoader = new ClassTemplateLoader(GenerateClassFileExample.class, "/template");
 			CONFIGURATION.setTemplateLoader(classTemplateLoader);
 			CONFIGURATION.setDefaultEncoding("UTF-8");
 			CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
