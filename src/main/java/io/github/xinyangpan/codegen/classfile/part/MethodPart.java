@@ -3,6 +3,8 @@ package io.github.xinyangpan.codegen.classfile.part;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import com.google.common.base.Defaults;
 import com.google.common.collect.Lists;
 
@@ -13,7 +15,7 @@ import io.github.xinyangpan.codegen.core.Import;
 public class MethodPart extends ClassPart {
 //	private List<ClassWrapper> throws;
 	private List<ClassWrapper> parameters;
-	private String content;
+	private List<String> contents;
 
 	public MethodPart() {
 		this.accessModifier = AccessModifier.PUBLIC;
@@ -33,11 +35,11 @@ public class MethodPart extends ClassPart {
 		Import.toAdd(targetSet, parameters);
 	}
 
-	public String getContent() {
-		if (content == null && (type.getClassIfPossible() != void.class)) {
-			return String.format("return %s;", Defaults.defaultValue(type.getClassIfPossible()));
+	public List<String> getContents() {
+		if (CollectionUtils.isEmpty(contents) && (type.getClassIfPossible() != void.class)) {
+			return Lists.newArrayList(String.format("return %s;", Defaults.defaultValue(type.getClassIfPossible())));
 		}
-		return content;
+		return contents;
 	}
 
 	@Override
@@ -45,8 +47,8 @@ public class MethodPart extends ClassPart {
 		StringBuilder builder = new StringBuilder();
 		builder.append("MethodPart [parameters=");
 		builder.append(parameters);
-		builder.append(", content=");
-		builder.append(content);
+		builder.append(", contents=");
+		builder.append(contents);
 		builder.append(", accessModifier=");
 		builder.append(accessModifier);
 		builder.append(", name=");
@@ -67,8 +69,8 @@ public class MethodPart extends ClassPart {
 		this.parameters = parameters;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContents(List<String> contents) {
+		this.contents = contents;
 	}
 
 }

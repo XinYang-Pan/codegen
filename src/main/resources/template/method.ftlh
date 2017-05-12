@@ -2,7 +2,7 @@
 	${annotationText}
 </#list>
 	${accessModifier.string} ${type.typedName} ${name}(<#list parameters as parameter>${parameter.typedName} arg${parameter?index}<#sep>, </#list>)<#if throwClass??>throw ${throwClass}</#if> {
-<#if content??>
+<#list contents as content>
 		${content}
-</#if>
+</#list>
 	}
