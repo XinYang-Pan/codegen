@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.StringUtils.capitalize;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.springframework.core.convert.converter.Converter;
 
@@ -14,6 +15,7 @@ import com.google.common.collect.Sets;
 import freemarker.template.Template;
 import io.github.xinyangpan.codegen.classfile.ClassFile;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
+import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.codegen.converter.converter.SetGetMethodBased;
 import io.github.xinyangpan.codegen.core.template.TemplateHelper;
@@ -30,12 +32,13 @@ public class Tools {
 		}
 	}
 
-	public static void generateConverter(Class<?> from, Class<?> to, String packageName, Writer out) {
+	public static void generateConverter(Class<?> from, Class<?> to, String packageName, String paramName, Writer out) {
 		// 
-		SetGetMethodBased methodBased = new SetGetMethodBased(to, from, null, "arg0");
+		SetGetMethodBased methodBased = new SetGetMethodBased(to, from, null, paramName);
+		List<String> contents = methodBased.generateMethodContents();
 		// 
-		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(to), ClassWrapper.of(from));
-		methodPart.setContents(methodBased.generateMethodContent());
+		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(to), new ParameterPart(from, methodBased.getGetParamName()));
+		methodPart.setContents(contents);
 		// 
 		ClassFile classFile = new ClassFile();
 		classFile.setPackageName(packageName);

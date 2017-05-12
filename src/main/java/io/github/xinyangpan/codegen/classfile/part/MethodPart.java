@@ -12,9 +12,9 @@ import io.github.xinyangpan.codegen.classfile.AccessModifier;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 
-public class MethodPart extends ClassPart {
+public class MethodPart extends ClassDeclarePart {
 //	private List<ClassWrapper> throws;
-	private List<ClassWrapper> parameters;
+	private List<ParameterPart> parameters;
 	private List<String> contents;
 
 	public MethodPart() {
@@ -22,7 +22,7 @@ public class MethodPart extends ClassPart {
 		this.type = ClassWrapper.of(void.class);
 	}
 
-	public MethodPart(String name, ClassWrapper returnType, ClassWrapper... parameters) {
+	public MethodPart(String name, ClassWrapper returnType, ParameterPart... parameters) {
 		this();
 		this.setName(name);
 		this.setType(returnType);
@@ -61,11 +61,11 @@ public class MethodPart extends ClassPart {
 		return builder.toString();
 	}
 
-	public List<ClassWrapper> getParameters() {
+	public List<ParameterPart> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(List<ClassWrapper> parameters) {
+	public void setParameters(List<ParameterPart> parameters) {
 		this.parameters = parameters;
 	}
 

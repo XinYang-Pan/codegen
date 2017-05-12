@@ -3,7 +3,7 @@ package io.github.xinyangpan.codegen.classfile.part;
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 
-public class FieldPart extends ClassPart {
+public class FieldPart extends ClassDeclarePart {
 	
 	public FieldPart() {
 		this.accessModifier = AccessModifier.PRIVATE;

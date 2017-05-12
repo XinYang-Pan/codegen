@@ -7,17 +7,44 @@ import java.util.Set;
 
 import com.google.common.collect.Lists;
 
-import io.github.xinyangpan.codegen.classfile.AccessModifier;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.annotation.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.pojo.bo.wrapper.clazz.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 
 public class ClassPart implements Import {
 
-	protected AccessModifier accessModifier;
-	protected String name;
 	protected ClassWrapper type;
+	protected String name;
 	protected List<? extends AnnotationWrapper> annotationWrapper;
+
+	// -----------------------------
+	// ----- Constructors
+	// -----------------------------
+	public ClassPart() {
+	}
+
+	public ClassPart(ClassWrapper type, String name) {
+		super();
+		this.type = type;
+		this.name = name;
+	}
+
+	public ClassPart(Class<?> type, String name) {
+		super();
+		this.type = ClassWrapper.of(type);
+		this.name = name;
+	}
+
+	public ClassPart(ClassWrapper type, String name, List<? extends AnnotationWrapper> annotationWrapper) {
+		super();
+		this.type = type;
+		this.name = name;
+		this.annotationWrapper = annotationWrapper;
+	}
+
+	// -----------------------------
+	// ----- Get Set ToString HashCode Equals
+	// -----------------------------
 
 	public List<String> getAnnotationTexts() {
 		List<String> annotationTexts = Lists.newArrayList();
@@ -35,10 +62,8 @@ public class ClassPart implements Import {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append(" [accessModifier=");
-		builder.append(accessModifier);
-		builder.append(", name=");
+		StringBuilder builder = new StringBuilder();
+		builder.append("ClassPart [name=");
 		builder.append(name);
 		builder.append(", type=");
 		builder.append(type);
@@ -46,14 +71,6 @@ public class ClassPart implements Import {
 		builder.append(annotationWrapper);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public AccessModifier getAccessModifier() {
-		return accessModifier;
-	}
-
-	public void setAccessModifier(AccessModifier accessModifier) {
-		this.accessModifier = accessModifier;
 	}
 
 	public String getName() {

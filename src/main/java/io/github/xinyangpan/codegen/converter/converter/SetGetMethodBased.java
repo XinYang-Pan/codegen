@@ -62,7 +62,7 @@ public class SetGetMethodBased extends SetGetGenerator {
 		formatterWrapper.close();
 	}
 
-	public List<String> generateMethodContent() {
+	public List<String> generateMethodContents() {
 		List<String> contents = Lists.newArrayList();
 		getParamName = ObjectUtils.firstNonNull(getParamName, StringUtils.uncapitalize(getClass.getSimpleName()));
 		setParamName = ObjectUtils.firstNonNull(setParamName, StringUtils.uncapitalize(setClass.getSimpleName()));
