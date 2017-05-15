@@ -16,6 +16,7 @@ import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 import io.github.xinyangpan.codegen.core.template.TemplateHelper;
+import io.github.xinyangpan.codegen.core.template.TemplateType;
 
 public class AbstractType {
 	protected AccessModifier accessModifier;
@@ -44,7 +45,7 @@ public class AbstractType {
 			List<String> texts = Lists.newArrayList();
 			for (FieldPart part : emptyIfNull(fieldParts)) {
 				StringWriter sw = new StringWriter();
-				TemplateHelper.getInstance().getFieldTemplate().process(part, sw);
+				TemplateHelper.getInstance().getTemplate(TemplateType.FIELD).process(part, sw);
 				texts.add(sw.toString());
 			}
 			return texts;
@@ -58,7 +59,7 @@ public class AbstractType {
 			List<String> texts = Lists.newArrayList();
 			for (MethodPart part : emptyIfNull(methodParts)) {
 				StringWriter sw = new StringWriter();
-				TemplateHelper.getInstance().getMethodTemplate().process(part, sw);
+				TemplateHelper.getInstance().getTemplate(TemplateType.METHOD).process(part, sw);
 				texts.add(sw.toString());
 			}
 			return texts;

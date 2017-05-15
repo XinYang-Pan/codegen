@@ -17,21 +17,22 @@ import freemarker.template.Template;
 import io.github.xinyangpan.codegen.builder.BuilderGenerator;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
-import io.github.xinyangpan.codegen.classfile.type.ClassFile;
+import io.github.xinyangpan.codegen.classfile.type.AbstractType;
+import io.github.xinyangpan.codegen.classfile.type.ClassType;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.converter.ConverterGenerator;
 import io.github.xinyangpan.codegen.core.template.TemplateHelper;
+import io.github.xinyangpan.codegen.core.template.TemplateType;
 import io.github.xinyangpan.commons.PropertyCollectingType;
 
 public class Tools {
 
-	public static void generateClassFile(ClassFile classFile, Writer out) {
+	public static void generateCode(AbstractType abstractType, Writer out) {
 		try {
-			
 			TemplateHelper templateHelper = TemplateHelper.getInstance();
-			Template template = templateHelper.getClassTemplate();
-			template.process(classFile, new OutputStreamWriter(System.out));
+			Template template = templateHelper.getTemplate(TemplateType.convert(abstractType.getType()));
+			template.process(abstractType, new OutputStreamWriter(System.out));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -46,15 +47,15 @@ public class Tools {
 		methodPart.setAnnotationWrapper(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		// 
-		ClassFile classFile = new ClassFile();
-		classFile.setPackageName(packageName);
-		classFile.setName(String.format("%sTo%sConverter", capitalize(source.getSimpleName()), capitalize(target.getSimpleName())));
-		classFile.setMethodParts(Lists.newArrayList(methodPart));
+		ClassType classType = new ClassType();
+		classType.setPackageName(packageName);
+		classType.setName(String.format("%sTo%sConverter", capitalize(source.getSimpleName()), capitalize(target.getSimpleName())));
+		classType.setMethodParts(Lists.newArrayList(methodPart));
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Converter.class, source, target));
-		classFile.setInterfaces(interfaces);
+		classType.setInterfaces(interfaces);
 		// 
-		generateClassFile(classFile, out);
+		generateCode(classType, out);
 	}
 
 	public static void generateBuilder(Class<?> target, String packageName, Writer out) {
@@ -66,15 +67,15 @@ public class Tools {
 		methodPart.setAnnotationWrapper(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		// 
-		ClassFile classFile = new ClassFile();
-		classFile.setPackageName(packageName);
-		classFile.setName(String.format("%sBuilder", capitalize(target.getSimpleName())));
-		classFile.setMethodParts(Lists.newArrayList(methodPart));
+		ClassType classType = new ClassType();
+		classType.setPackageName(packageName);
+		classType.setName(String.format("%sBuilder", capitalize(target.getSimpleName())));
+		classType.setMethodParts(Lists.newArrayList(methodPart));
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Builder.class, target));
-		classFile.setInterfaces(interfaces);
+		classType.setInterfaces(interfaces);
 		// 
-		generateClassFile(classFile, out);
+		generateCode(classType, out);
 	}
 
 }

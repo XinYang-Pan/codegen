@@ -1,6 +1,13 @@
 package io.github.xinyangpan.codegen.core.template;
 
-import example.GenerateClassFileExample;
+import java.util.Collections;
+import java.util.Map;
+
+import org.apache.commons.lang3.ObjectUtils;
+
+import com.google.common.collect.Maps;
+
+import example.GenerateClassExample;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -10,21 +17,19 @@ public class TemplateHelper {
 	private static TemplateHelper instance;
 	private static Configuration CONFIGURATION;
 	// 
-	private Template classTemplate;
-	private Template fieldTemplate;
-	private Template methodTemplate;
+	private Map<TemplateType, Template> typeToTemplate = Maps.newEnumMap(TemplateType.class);
 
 	private TemplateHelper() {
 	}
-	
+
 	// -----------------------------
 	// ----- Static Methods
 	// -----------------------------
-	
+
 	public static TemplateHelper getInstance() {
 		if (instance == null) {
 			instance = new TemplateHelper();
-			instance.initTemplates(new TemplateVariable());
+			instance.initTemplates();
 		}
 		return instance;
 	}
@@ -36,69 +41,58 @@ public class TemplateHelper {
 	private static Configuration configuration() {
 		if (CONFIGURATION == null) {
 			CONFIGURATION = new Configuration(Configuration.VERSION_2_3_23);
-			ClassTemplateLoader classTemplateLoader = new ClassTemplateLoader(GenerateClassFileExample.class, "/template");
-			CONFIGURATION.setTemplateLoader(classTemplateLoader);
+			CONFIGURATION.setTemplateLoader(new ClassTemplateLoader(GenerateClassExample.class, "/template"));
 			CONFIGURATION.setDefaultEncoding("UTF-8");
 			CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 			CONFIGURATION.setLogTemplateExceptions(false);
 		}
 		return CONFIGURATION;
 	}
-	
+
 	// -----------------------------
 	// ----- Non-Static Methods
 	// -----------------------------
-	
-	public void initTemplates(TemplateVariable templateVariable) {
+
+	public void initTemplates() {
+		this.initTemplates(Collections.emptyMap());
+	}
+
+	public void initTemplates(Map<TemplateType, String> typeTemplateMap) {
 		try {
+			typeToTemplate.clear();
 			Configuration configuration = configuration();
-			classTemplate = configuration.getTemplate(templateVariable.getClassTemplateFile());
-			fieldTemplate = configuration.getTemplate(templateVariable.getFieldTemplateFile());
-			methodTemplate = configuration.getTemplate(templateVariable.getMethodTemplateFile());
+			for (TemplateType templateType : TemplateType.values()) {
+				String fileName = ObjectUtils.firstNonNull(typeTemplateMap.get(templateType), templateType.getFileName());
+				typeToTemplate.put(templateType, configuration.getTemplate(fileName));
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	public Template getTemplate(TemplateType templateType) {
+		return typeToTemplate.get(templateType);
+	}
+
 	// -----------------------------
 	// ----- Get Set ToString HashCode Equals
 	// -----------------------------
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("TemplateHelper [classTemplate=");
-		builder.append(classTemplate);
-		builder.append(", fieldTemplate=");
-		builder.append(fieldTemplate);
-		builder.append(", methodTemplate=");
-		builder.append(methodTemplate);
+		builder.append("TemplateHelper [typeToTemplate=");
+		builder.append(typeToTemplate);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public Template getClassTemplate() {
-		return classTemplate;
+	public Map<TemplateType, Template> getTypeToTemplate() {
+		return typeToTemplate;
 	}
 
-	public void setClassTemplate(Template classTemplate) {
-		this.classTemplate = classTemplate;
-	}
-
-	public Template getMethodTemplate() {
-		return methodTemplate;
-	}
-
-	public void setMethodTemplate(Template methodTemplate) {
-		this.methodTemplate = methodTemplate;
-	}
-
-	public Template getFieldTemplate() {
-		return fieldTemplate;
-	}
-
-	public void setFieldTemplate(Template fieldTemplate) {
-		this.fieldTemplate = fieldTemplate;
+	public void setTypeToTemplate(Map<TemplateType, Template> typeToTemplate) {
+		this.typeToTemplate = typeToTemplate;
 	}
 
 }

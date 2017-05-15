@@ -7,18 +7,18 @@ import io.github.xinyangpan.codegen.classfile.Type;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 
-public class ClassFile extends AbstractType {
+public class InterfaceType extends AbstractType {
 
 	private ClassWrapper superClass;
 	private LinkedHashSet<ClassWrapper> interfaces;
 
-	public ClassFile() {
+	public InterfaceType() {
 		this.type = Type.CLASS;
 	}
 
 	public Set<Class<?>> getImports() {
 		Set<Class<?>> imports = super.getImports();
-		Import.toAdd(imports, interfaces);
+		Import.toAdd(imports, interfaces); 
 		Import.toAdd(imports, superClass);
 		return imports;
 	}

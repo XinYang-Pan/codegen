@@ -13,11 +13,11 @@ import io.github.xinyangpan.codegen.Tools;
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
-import io.github.xinyangpan.codegen.classfile.type.ClassFile;
+import io.github.xinyangpan.codegen.classfile.type.ClassType;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
-public class GenerateClassFileExample {
+public class GenerateClassExample {
 
 	public static void main(String[] args) throws Exception {
 
@@ -28,15 +28,15 @@ public class GenerateClassFileExample {
 		ArrayList<AnnotationWrapper> newArrayList = Lists.newArrayList(annotationWrapper);
 		fieldPart.setAnnotationWrapper(newArrayList);
 		//
-		ClassFile classFile = new ClassFile();
-		classFile.setPackageName("io.github.xinyangpan.test");
-		classFile.setName("Test");
-		classFile.setMethodParts(Lists.newArrayList(methodPart));
-		classFile.setFieldParts(Lists.newArrayList(fieldPart));
+		ClassType classType = new ClassType();
+		classType.setPackageName("io.github.xinyangpan.test");
+		classType.setName("Test");
+		classType.setMethodParts(Lists.newArrayList(methodPart));
+		classType.setFieldParts(Lists.newArrayList(fieldPart));
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Converter.class, String.class, Integer.class));
-		classFile.setInterfaces(interfaces);
-		Tools.generateClassFile(classFile, new OutputStreamWriter(System.out));
+		classType.setInterfaces(interfaces);
+		Tools.generateCode(classType, new OutputStreamWriter(System.out));
 	}
 
 }
