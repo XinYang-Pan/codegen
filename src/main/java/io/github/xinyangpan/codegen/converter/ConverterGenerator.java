@@ -54,7 +54,7 @@ public class ConverterGenerator implements ContentGenerator {
 			} else {
 				value = String.format("%s.%s()", sourceParamName, sourcePd.getReadMethod().getName());
 			}
-			contents.add(format(0, "%s.%s(%s);", targetParamName, targetPd.getName(), value));
+			contents.add(format(0, "%s.%s(%s);", targetParamName, targetPd.getWriteMethod().getName(), value));
 		}
 		contents.add(format(0, "return %s;", targetParamName));
 		return contents;
