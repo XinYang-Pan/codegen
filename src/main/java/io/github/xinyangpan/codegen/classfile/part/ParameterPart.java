@@ -9,7 +9,7 @@ public class ParameterPart extends ClassPart {
 
 	public ParameterPart() {
 	}
-	
+
 	public ParameterPart(Class<?> type) {
 		this(type, null);
 	}
@@ -25,7 +25,5 @@ public class ParameterPart extends ClassPart {
 	public ParameterPart(ClassWrapper type, String name) {
 		super(type, name);
 	}
-	
-	
-	
+
 }
