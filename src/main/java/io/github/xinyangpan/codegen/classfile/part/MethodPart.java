@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
+import io.github.xinyangpan.codegen.core.template.TemplateType;
 
 public class MethodPart extends ClassDeclarePart {
 //	private List<ClassWrapper> throws;
@@ -27,6 +28,11 @@ public class MethodPart extends ClassDeclarePart {
 		this.setName(name);
 		this.setType(returnType);
 		this.parameters = Lists.newArrayList(parameters);
+	}
+
+	@Override
+	public TemplateType templateType() {
+		return TemplateType.METHOD;
 	}
 
 	@Override

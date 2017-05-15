@@ -1,8 +1,9 @@
 package io.github.xinyangpan.codegen.classfile.part;
 
 import io.github.xinyangpan.codegen.classfile.AccessModifier;
+import io.github.xinyangpan.codegen.core.template.HasTemplateType;
 
-public class ClassDeclarePart extends ClassPart {
+public abstract class ClassDeclarePart extends ClassPart implements HasTemplateType {
 
 	protected AccessModifier accessModifier;
 

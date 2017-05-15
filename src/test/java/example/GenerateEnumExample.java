@@ -1,13 +1,11 @@
 package example;
 
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import io.github.xinyangpan.codegen.Tools;
 import io.github.xinyangpan.codegen.classfile.type.EnumType;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
@@ -22,7 +20,8 @@ public class GenerateEnumExample {
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Serializable.class));
 		enumType.setInterfaces(interfaces);
-		Tools.generateCode(enumType, new OutputStreamWriter(System.out));
+		enumType.printToConsole();
+		enumType.writeToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import io.github.xinyangpan.codegen.classfile.Type;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
+import io.github.xinyangpan.codegen.core.template.TemplateType;
 
 public class ClassType extends AbstractType {
 
@@ -14,6 +15,11 @@ public class ClassType extends AbstractType {
 
 	public ClassType() {
 		this.type = Type.CLASS;
+	}
+	
+	@Override
+	public TemplateType templateType() {
+		return TemplateType.CLASS;
 	}
 
 	public Set<Class<?>> getImports() {

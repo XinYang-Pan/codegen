@@ -7,7 +7,7 @@ public class Test implements Converter<String, Integer> {
 	@SuppressWarnings("unused")
 	private int id;
 
-	public Integer convert(String arg0) {
+	public Integer convert(String string) {
 		return null;
 	}
 

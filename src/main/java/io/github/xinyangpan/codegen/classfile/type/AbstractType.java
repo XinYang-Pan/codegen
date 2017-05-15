@@ -2,7 +2,6 @@ package io.github.xinyangpan.codegen.classfile.type;
 
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Set;
 
@@ -15,10 +14,9 @@ import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.core.Import;
-import io.github.xinyangpan.codegen.core.template.TemplateHelper;
-import io.github.xinyangpan.codegen.core.template.TemplateType;
+import io.github.xinyangpan.codegen.core.template.HasTemplateType;
 
-public class AbstractType {
+public abstract class AbstractType implements HasTemplateType {
 	protected AccessModifier accessModifier;
 	protected Type type;
 	protected String name;
@@ -30,6 +28,13 @@ public class AbstractType {
 
 	public AbstractType() {
 		this.accessModifier = AccessModifier.PUBLIC;
+	}
+
+	@Override
+	public String getRelativeFileName() {
+		String path = packageName.replaceAll("\\.", "/");
+		String fileName = String.format("%s/%s.java", path, name);
+		return fileName;
 	}
 
 	public Set<Class<?>> getImports() {
@@ -44,9 +49,7 @@ public class AbstractType {
 		try {
 			List<String> texts = Lists.newArrayList();
 			for (FieldPart part : emptyIfNull(fieldParts)) {
-				StringWriter sw = new StringWriter();
-				TemplateHelper.getInstance().getTemplate(TemplateType.FIELD).process(part, sw);
-				texts.add(sw.toString());
+				texts.add(part.processToString());
 			}
 			return texts;
 		} catch (Exception e) {
@@ -58,9 +61,7 @@ public class AbstractType {
 		try {
 			List<String> texts = Lists.newArrayList();
 			for (MethodPart part : emptyIfNull(methodParts)) {
-				StringWriter sw = new StringWriter();
-				TemplateHelper.getInstance().getTemplate(TemplateType.METHOD).process(part, sw);
-				texts.add(sw.toString());
+				texts.add(part.processToString());
 			}
 			return texts;
 		} catch (Exception e) {

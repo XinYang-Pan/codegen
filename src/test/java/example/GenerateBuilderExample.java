@@ -1,14 +1,14 @@
 package example;
 
-import java.io.OutputStreamWriter;
-
 import io.github.xinyangpan.codegen.Tools;
+import io.github.xinyangpan.codegen.classfile.type.ClassType;
 import io.github.xinyangpan.models.person.Person;
 
 public class GenerateBuilderExample {
 
 	public static void main(String[] args) {
-		Tools.generateBuilder(Person.class, "example.gen", new OutputStreamWriter(System.out));
+		ClassType builderGen = Tools.generateBuilder(Person.class, "example.gen");
+		builderGen.printToConsole();
 	}
 
 }

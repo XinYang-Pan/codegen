@@ -7,6 +7,7 @@ import java.util.Set;
 import io.github.xinyangpan.codegen.classfile.Type;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
+import io.github.xinyangpan.codegen.core.template.TemplateType;
 
 public class EnumType extends AbstractType {
 
@@ -15,6 +16,11 @@ public class EnumType extends AbstractType {
 
 	public EnumType() {
 		this.type = Type.ENUM;
+	}
+	
+	@Override
+	public TemplateType templateType() {
+		return TemplateType.ENUM;
 	}
 
 	public Set<Class<?>> getImports() {
