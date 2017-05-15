@@ -17,8 +17,9 @@ import io.github.xinyangpan.codegen.classfile.ClassFile;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
-import io.github.xinyangpan.codegen.converter.converter.SetGetMethodBased;
+import io.github.xinyangpan.codegen.converter.ConverterGenerator;
 import io.github.xinyangpan.codegen.core.template.TemplateHelper;
+import io.github.xinyangpan.commons.PropertyCollectingType;
 
 public class Tools {
 
@@ -34,10 +35,10 @@ public class Tools {
 
 	public static void generateConverter(Class<?> from, Class<?> to, String packageName, String paramName, Writer out) {
 		// 
-		SetGetMethodBased methodBased = new SetGetMethodBased(to, from, null, paramName);
-		List<String> contents = methodBased.generateMethodContents();
+		ConverterGenerator converterGenerator = new ConverterGenerator(to, from, paramName, PropertyCollectingType.DECLARED_FIELD);
+		List<String> contents = converterGenerator.contents();
 		// 
-		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(to), new ParameterPart(from, methodBased.getGetParamName()));
+		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(to), new ParameterPart(from, converterGenerator.getSourceParamName()));
 		methodPart.setContents(contents);
 		// 
 		ClassFile classFile = new ClassFile();
