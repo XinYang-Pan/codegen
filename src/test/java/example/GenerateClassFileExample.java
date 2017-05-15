@@ -10,10 +10,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.Tools;
-import io.github.xinyangpan.codegen.classfile.ClassFile;
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
+import io.github.xinyangpan.codegen.classfile.type.ClassFile;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
