@@ -9,6 +9,7 @@ public class GenerateConverterExample {
 	public static void main(String[] args) {
 		ClassType converterGen = Tools.generateConverter(Person.class, Person.class, "example.gen", "person");
 		converterGen.processToConsole();
+		converterGen.processToFile("./src/test/java");
 	}
 
 }

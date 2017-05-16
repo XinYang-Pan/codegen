@@ -1,7 +1,7 @@
 package example.gen;
 
-import org.apache.commons.lang3.builder.Builder;
 import io.github.xinyangpan.models.person.Person;
+import org.apache.commons.lang3.builder.Builder;
 
 public class PersonBuilder implements Builder<Person> {
 
