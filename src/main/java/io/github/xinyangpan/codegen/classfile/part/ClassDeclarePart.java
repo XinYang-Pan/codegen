@@ -6,21 +6,7 @@ import io.github.xinyangpan.codegen.core.template.HasTemplateType;
 public abstract class ClassDeclarePart extends ClassPart implements HasTemplateType {
 
 	protected AccessModifier accessModifier;
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ClassDeclarePart [accessModifier=");
-		builder.append(accessModifier);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", annotationWrapper=");
-		builder.append(annotationWrapper);
-		builder.append("]");
-		return builder.toString();
-	}
+	protected boolean isStatic;
 
 	public AccessModifier getAccessModifier() {
 		return accessModifier;
@@ -28,6 +14,14 @@ public abstract class ClassDeclarePart extends ClassPart implements HasTemplateT
 
 	public void setAccessModifier(AccessModifier accessModifier) {
 		this.accessModifier = accessModifier;
+	}
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
 	}
 
 }

@@ -57,10 +57,12 @@ public class MethodPart extends ClassDeclarePart {
 		builder.append(contents);
 		builder.append(", accessModifier=");
 		builder.append(accessModifier);
-		builder.append(", name=");
-		builder.append(name);
+		builder.append(", isStatic=");
+		builder.append(isStatic);
 		builder.append(", type=");
 		builder.append(type);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append(", annotationWrapper=");
 		builder.append(annotationWrapper);
 		builder.append("]");

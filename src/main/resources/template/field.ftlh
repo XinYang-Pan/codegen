@@ -1,4 +1,4 @@
 <#list annotationTexts as annotationText>
 	${annotationText}
 </#list>
-	${accessModifier.text} ${type.typedName} ${name};
+	${accessModifier.text} <#if static>static </#if>${type.typedName} ${name};
