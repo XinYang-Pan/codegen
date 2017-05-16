@@ -34,7 +34,7 @@ public class GenerateClassExample {
 		interfaces.add(ClassWrapper.of(Converter.class, String.class, Integer.class));
 		classType.setInterfaces(interfaces);
 		classType.processToConsole();
-		classType.processToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
+		classType.processToFile("./src/test/java");
 	}
 
 }

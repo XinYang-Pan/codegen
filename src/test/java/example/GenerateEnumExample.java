@@ -21,7 +21,7 @@ public class GenerateEnumExample {
 		interfaces.add(ClassWrapper.of(Serializable.class));
 		enumType.setInterfaces(interfaces);
 		enumType.processToConsole();
-		enumType.processToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
+		enumType.processToFile("./src/test/java");
 	}
 
 }
