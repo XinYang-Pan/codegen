@@ -22,9 +22,9 @@ public abstract class AbstractType implements HasTemplateType {
 	protected String name;
 	protected String packageName;
 
-	protected List<AnnotationWrapper> annotationWrappers;
-	protected List<FieldPart> fieldParts;
-	protected List<MethodPart> methodParts;
+	protected List<AnnotationWrapper> annotationWrappers = Lists.newArrayList();
+	protected List<FieldPart> fieldParts = Lists.newArrayList();
+	protected List<MethodPart> methodParts = Lists.newArrayList();
 
 	public AbstractType() {
 		this.accessModifier = AccessModifier.PUBLIC;
@@ -32,8 +32,8 @@ public abstract class AbstractType implements HasTemplateType {
 
 	@Override
 	public String getRelativeFileName() {
-		String path = packageName.replaceAll("\\.", "/");
-		String fileName = String.format("%s/%s.java", path, name);
+		String fullName = this.getFullName().replaceAll("\\.", "/");
+		String fileName = String.format("%s.java", fullName);
 		return fileName;
 	}
 
@@ -68,6 +68,14 @@ public abstract class AbstractType implements HasTemplateType {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public String getFullName() {
+		return String.format("%s.%s", packageName, name);
+	}
+
+	// -----------------------------
+	// ----- Get Set ToString HashCode Equals
+	// -----------------------------
 
 	public Type getType() {
 		return type;

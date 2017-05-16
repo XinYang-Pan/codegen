@@ -18,11 +18,11 @@ public interface HasTemplateType {
 		return "";
 	}
 
-	default void printToConsole() {
-		this.process(new OutputStreamWriter(System.out));
+	default void processToConsole() {
+		this.processTo(new OutputStreamWriter(System.out));
 	}
 
-	default void process(Writer writer) {
+	default void processTo(Writer writer) {
 		try {
 			TemplateHelper templateHelper = TemplateHelper.getInstance();
 			Template template = templateHelper.getTemplate(templateType());
@@ -34,17 +34,17 @@ public interface HasTemplateType {
 
 	default String processToString() {
 		StringWriter sw = new StringWriter();
-		this.process(sw);
+		this.processTo(sw);
 		return sw.toString();
 	}
 
-	default void writeToFile(String sourceDir) {
+	default void processToFile(String sourceDir) {
 		String relativeFileName = this.getRelativeFileName();
 		String fullName = String.format("%s/%s", sourceDir, relativeFileName);
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(fullName);
-			this.process(fileWriter);
+			this.processTo(fileWriter);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {

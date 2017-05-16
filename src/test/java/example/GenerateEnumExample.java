@@ -20,8 +20,8 @@ public class GenerateEnumExample {
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Serializable.class));
 		enumType.setInterfaces(interfaces);
-		enumType.printToConsole();
-		enumType.writeToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
+		enumType.processToConsole();
+		enumType.processToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
 	}
 
 }

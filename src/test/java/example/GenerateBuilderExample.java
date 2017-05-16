@@ -8,7 +8,7 @@ public class GenerateBuilderExample {
 
 	public static void main(String[] args) {
 		ClassType builderGen = Tools.generateBuilder(Person.class, "example.gen");
-		builderGen.printToConsole();
+		builderGen.processToConsole();
 	}
 
 }

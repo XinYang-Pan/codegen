@@ -33,8 +33,8 @@ public class GenerateClassExample {
 		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
 		interfaces.add(ClassWrapper.of(Converter.class, String.class, Integer.class));
 		classType.setInterfaces(interfaces);
-		classType.printToConsole();
-		classType.writeToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
+		classType.processToConsole();
+		classType.processToFile("C:/Users/nextop-dev001/git/codegen/src/test/java");
 	}
 
 }

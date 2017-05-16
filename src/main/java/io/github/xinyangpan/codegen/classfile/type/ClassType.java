@@ -1,9 +1,13 @@
 package io.github.xinyangpan.codegen.classfile.type;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import io.github.xinyangpan.codegen.classfile.Type;
+import io.github.xinyangpan.codegen.classfile.pojo.PojoField;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 import io.github.xinyangpan.codegen.core.template.TemplateType;
@@ -16,7 +20,19 @@ public class ClassType extends AbstractType {
 	public ClassType() {
 		this.type = Type.CLASS;
 	}
-	
+
+	public void addPojoField(PojoField pojoField) {
+		this.fieldParts.add(pojoField.getFieldPart());
+		this.methodParts.add(pojoField.getReadMethod());
+		this.methodParts.add(pojoField.getWriterMethod());
+	}
+
+	public void addPojoFields(List<PojoField> pojoFields) {
+		for (PojoField pojoField : emptyIfNull(pojoFields)) {
+			this.addPojoField(pojoField);
+		}
+	}
+
 	@Override
 	public TemplateType templateType() {
 		return TemplateType.CLASS;
@@ -24,7 +40,7 @@ public class ClassType extends AbstractType {
 
 	public Set<Class<?>> getImports() {
 		Set<Class<?>> imports = super.getImports();
-		Import.toAdd(imports, interfaces); 
+		Import.toAdd(imports, interfaces);
 		Import.toAdd(imports, superClass);
 		return imports;
 	}

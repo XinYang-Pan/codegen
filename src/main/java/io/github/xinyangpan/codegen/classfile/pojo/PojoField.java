@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen.classfile.pojo.bo;
+package io.github.xinyangpan.codegen.classfile.pojo;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;
@@ -6,11 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import io.github.xinyangpan.codegen.classfile.part.FieldPart;
+import io.github.xinyangpan.codegen.classfile.part.MethodPart;
+import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
@@ -22,6 +27,30 @@ public class PojoField {
 	private String name;
 	private ClassWrapper type;
 	private Map<AnnotationType, List<AnnotationWrapper>> annotationWrapperMap;
+
+	public FieldPart getFieldPart() {
+		FieldPart fieldPart = new FieldPart(type, name);
+		fieldPart.setAnnotationWrapper(annotationWrapperMap.get(AnnotationType.Field));
+		return fieldPart;
+	}
+
+	public MethodPart getReadMethod() {
+		String prefix = boolean.class == type.getClassIfPossible() ? "is" : "get";
+		String methodName = String.format("%s%s", prefix, StringUtils.capitalize(name));
+		MethodPart methodPart = new MethodPart(methodName, type);
+		methodPart.setAnnotationWrapper(annotationWrapperMap.get(AnnotationType.Get));
+		methodPart.setContents(Lists.newArrayList(String.format("return this.%s;", name)));
+		return methodPart;
+	}
+
+	public MethodPart getWriterMethod() {
+		String methodName = String.format("set%s", StringUtils.capitalize(name));
+		ParameterPart parameterPart = new ParameterPart(type, name);
+		MethodPart methodPart = new MethodPart(methodName, ClassWrapper.of(void.class), parameterPart);
+		methodPart.setAnnotationWrapper(annotationWrapperMap.get(AnnotationType.Get));
+		methodPart.setContents(Lists.newArrayList(String.format("this.%s = %s;", name, parameterPart.getName())));
+		return methodPart;
+	}
 
 	public PojoField addAnnotation(AnnotationType annotationType, Class<? extends Annotation> annotation) {
 		Preconditions.checkNotNull(annotationType);
@@ -68,8 +97,7 @@ public class PojoField {
 				}
 			}
 		}
-		classes.addAll(this.getType()
-			.getImports());
+		classes.addAll(this.getType().getImports());
 		return classes;
 	}
 

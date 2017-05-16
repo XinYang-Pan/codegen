@@ -7,7 +7,6 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import com.google.common.collect.Maps;
 
-import example.GenerateClassExample;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -41,7 +40,7 @@ public class TemplateHelper {
 	private static Configuration configuration() {
 		if (CONFIGURATION == null) {
 			CONFIGURATION = new Configuration(Configuration.VERSION_2_3_23);
-			CONFIGURATION.setTemplateLoader(new ClassTemplateLoader(GenerateClassExample.class, "/template"));
+			CONFIGURATION.setTemplateLoader(new ClassTemplateLoader(TemplateHelper.class, "/template"));
 			CONFIGURATION.setDefaultEncoding("UTF-8");
 			CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 			CONFIGURATION.setLogTemplateExceptions(false);
