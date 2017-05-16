@@ -1,5 +1,6 @@
 package io.github.xinyangpan.codegen.core.template;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -7,6 +8,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import com.google.common.io.Closeables;
+import com.google.common.io.Files;
 
 import freemarker.template.Template;
 
@@ -40,10 +42,12 @@ public interface HasTemplateType {
 
 	default void processToFile(String sourceDir) {
 		String relativeFileName = this.getRelativeFileName();
-		String fullName = String.format("%s/%s", sourceDir, relativeFileName);
+		String pathname = String.format("%s/%s", sourceDir, relativeFileName);
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(fullName);
+			File file = new File(pathname);
+			Files.createParentDirs(file);
+			fileWriter = new FileWriter(file);
 			this.processTo(fileWriter);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

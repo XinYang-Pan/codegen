@@ -1,7 +1,6 @@
 package io.github.xinyangpan.codegen.classfile.wrapper;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -62,10 +61,6 @@ public class AnnotationWrapper implements Import {
 		return classWrapper;
 	}
 
-	public List<ClassWrapper> getImports() {
-		return classWrapper.getImports();
-	}
-	
 	@Override
 	public void addImportsTo(Set<Class<?>> targetSet) {
 		classWrapper.addImportsTo(targetSet);

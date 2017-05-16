@@ -1,20 +1,17 @@
 package io.github.xinyangpan.codegen.classfile.wrapper.annotation;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import com.google.common.collect.Lists;
-
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
-import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
 public class GeneratedValueWrapper extends AnnotationWrapper {
 
 	private GenerationType generationType;
 	private String name;
-	
+
 	public GeneratedValueWrapper(GenerationType generationType, String name) {
 		super(GeneratedValue.class);
 		this.generationType = generationType;
@@ -25,13 +22,13 @@ public class GeneratedValueWrapper extends AnnotationWrapper {
 	public String getDisplayString() {
 		return String.format("@GeneratedValue(strategy=GenerationType.%s, generator=\"%s\")", generationType.name(), name);
 	}
-	
+
 	@Override
-	public List<ClassWrapper> getImports() {
-		List<ClassWrapper> classWrappers = Lists.newArrayList();
-		classWrappers.addAll(super.getImports());
-		classWrappers.add(ClassWrapper.of(GenerationType.class));
-		return classWrappers;
+	public void addImportsTo(Set<Class<?>> targetSet) {
+		super.addImportsTo(targetSet);
+		if (generationType != null) {
+			targetSet.add(generationType.getClass());
+		}
 	}
-	
+
 }

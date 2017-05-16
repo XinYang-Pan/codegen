@@ -41,7 +41,7 @@ public abstract class AbstractType implements HasTemplateType {
 		Set<Class<?>> imports = Sets.newHashSet();
 		Import.toAdd(imports, annotationWrappers);
 		Import.toAdd(imports, methodParts);
-		Import.toAdd(imports, annotationWrappers);
+		Import.toAdd(imports, fieldParts);
 		return imports;
 	}
 

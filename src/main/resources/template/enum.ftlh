@@ -1,11 +1,11 @@
 package ${packageName};
-<#if imports??>
 
+<#if imports?has_content>
 <#list imports as class>
 import ${class.name};
 </#list>
-</#if>
 
+</#if>
 ${accessModifier.text} ${type.text} ${name}<#if superClass??> extends ${superClass}</#if><#if interfaces??> implements <#list interfaces as class>${class.typedName}<#sep>, </#list></#if> {
 	${values?join(", ")};
 <#list fieldTexts as fieldText>

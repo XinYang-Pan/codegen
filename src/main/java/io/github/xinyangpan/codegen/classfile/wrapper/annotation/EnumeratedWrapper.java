@@ -1,19 +1,16 @@
 package io.github.xinyangpan.codegen.classfile.wrapper.annotation;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import com.google.common.collect.Lists;
-
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
-import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
 public class EnumeratedWrapper extends AnnotationWrapper {
-	
+
 	private EnumType enumType;
-	
+
 	public EnumeratedWrapper(EnumType enumType) {
 		super(Enumerated.class);
 		this.enumType = enumType;
@@ -27,15 +24,13 @@ public class EnumeratedWrapper extends AnnotationWrapper {
 		}
 		return String.format("@%s%s", classWrapper.getName(), extra);
 	}
-	
+
 	@Override
-	public List<ClassWrapper> getImports() {
-		List<ClassWrapper> classWrappers = Lists.newArrayList();
-		classWrappers.addAll(super.getImports());
+	public void addImportsTo(Set<Class<?>> targetSet) {
+		super.addImportsTo(targetSet);
 		if (enumType != null) {
-			classWrappers.add(ClassWrapper.of(EnumType.class));
+			targetSet.add(enumType.getClass());
 		}
-		return classWrappers;
 	}
-	
+
 }

@@ -1,17 +1,14 @@
 package io.github.xinyangpan.codegen.classfile.pojo;
 
 import java.lang.annotation.Annotation;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
@@ -73,32 +70,6 @@ public class PojoField {
 			annotationWrapperMap.put(annotationType, list = Lists.newArrayList());
 		}
 		list.add(annotationWrapper);
-	}
-
-	public List<AnnotationWrapper> getAnnotationWrappers(AnnotationType annotationType) {
-		Preconditions.checkNotNull(annotationType);
-		// 
-		if (annotationWrapperMap == null) {
-			return Collections.emptyList();
-		}
-		List<AnnotationWrapper> list = annotationWrapperMap.get(annotationType);
-		if (list == null) {
-			return Collections.emptyList();
-		}
-		return list;
-	}
-
-	public Set<ClassWrapper> getImports() {
-		Set<ClassWrapper> classes = Sets.newHashSet();
-		if (annotationWrapperMap != null) {
-			for (List<AnnotationWrapper> annotationWrappers : annotationWrapperMap.values()) {
-				for (AnnotationWrapper annotationWrapper : annotationWrappers) {
-					classes.addAll(annotationWrapper.getImports());
-				}
-			}
-		}
-		classes.addAll(this.getType().getImports());
-		return classes;
 	}
 
 	// --------------------------------------

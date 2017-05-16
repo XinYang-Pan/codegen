@@ -1,7 +1,6 @@
 package io.github.xinyangpan.codegen.classfile.wrapper.annotation;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
 
 import com.google.common.base.Preconditions;
 
@@ -14,7 +13,7 @@ public class ColumnWrapper extends AnnotationWrapper {
 	}
 
 	public ColumnWrapper(String columnName) {
-		super(Table.class);
+		super(Column.class);
 		this.setSource(columnName);
 	}
 
