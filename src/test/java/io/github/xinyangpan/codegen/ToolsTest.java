@@ -7,8 +7,15 @@ import org.junit.Test;
 public class ToolsTest {
 
 	@Test
-	public void test_generateClassFile() {
-		fail("Not yet implemented");
+	public void generateToString() throws Exception {
+	}
+
+	@Test
+	public void generateConverter() throws Exception {
+	}
+
+	@Test
+	public void generateBuilder() throws Exception {
 	}
 
 }
