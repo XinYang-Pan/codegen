@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ParameterPart extends ClassPart {
 
+	private boolean varargs;
+
 	public ParameterPart() {
 	}
 
@@ -24,6 +26,14 @@ public class ParameterPart extends ClassPart {
 
 	public ParameterPart(ClassWrapper type, String name) {
 		super(type, name);
+	}
+
+	public boolean isVarargs() {
+		return varargs;
+	}
+
+	public void setVarargs(boolean varargs) {
+		this.varargs = varargs;
 	}
 
 }

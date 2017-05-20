@@ -1,12 +1,10 @@
 package example;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
 import org.springframework.core.convert.converter.Converter;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
@@ -28,11 +26,9 @@ public class GenerateClassExample {
 		ClassType classType = new ClassType();
 		classType.setPackageName("io.github.xinyangpan.test");
 		classType.setName("Test");
-		classType.setMethodParts(Lists.newArrayList(methodPart));
-		classType.setFieldParts(Lists.newArrayList(fieldPart));
-		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
-		interfaces.add(ClassWrapper.of(Converter.class, String.class, Integer.class));
-		classType.setInterfaces(interfaces);
+		classType.addMethodPart(methodPart);
+		classType.addFieldPart(fieldPart);
+		classType.addInterface(ClassWrapper.of(Converter.class, String.class, Integer.class));
 		classType.processToConsole();
 		classType.processToFile("./src/test/java");
 	}

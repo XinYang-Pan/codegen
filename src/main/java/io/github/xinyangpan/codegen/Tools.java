@@ -1,7 +1,16 @@
 package io.github.xinyangpan.codegen;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.Builder;
+import org.springframework.core.convert.converter.Converter;
+
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+
 import io.github.xinyangpan.codegen.builder.BuilderGenerator;
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
@@ -12,14 +21,6 @@ import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.converter.ConverterGenerator;
 import io.github.xinyangpan.codegen.core.CodeGenUtils;
 import io.github.xinyangpan.commons.PropertyCollectingType;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.builder.Builder;
-import org.springframework.core.convert.converter.Converter;
-
-import java.util.LinkedHashSet;
-import java.util.List;
-
-import static org.apache.commons.lang3.StringUtils.capitalize;
 
 public class Tools {
 
@@ -74,6 +75,32 @@ public class Tools {
 		return methodPart;
 	}
 
+	public static MethodPart generateAddForListField(Class<?> type, String fieldName, String singular) {
+		String methodName = String.format("add%s", StringUtils.capitalize(singular));
+		String content = String.format("this.%s.add(%s);", fieldName, singular);
+		MethodPart methodPart = new MethodPart(methodName, void.class, new ParameterPart(type, singular));
+		methodPart.setContents(Lists.newArrayList(content));
+		return methodPart;
+	}
+
+	public static MethodPart generateAddsForListField(Class<?> type, String fieldName, String singular) {
+		String methodName = String.format("add%s", StringUtils.capitalize(fieldName));
+		//
+		List<String> contents = Lists.newArrayList();
+		contents.add(CodeGenUtils.format(0, "if (%s == null) {", fieldName));
+		contents.add(CodeGenUtils.format(1, "return;"));
+		contents.add(CodeGenUtils.format(0, "}"));
+		contents.add(CodeGenUtils.format(0, "for (%s %s : %s) {", type.getSimpleName(), singular, fieldName));
+		contents.add(CodeGenUtils.format(1, "this.%s.add(%s);", fieldName, singular));
+		contents.add(CodeGenUtils.format(0, "}"));
+		//
+		ParameterPart parameterPart = new ParameterPart(type, fieldName);
+		parameterPart.setVarargs(true);
+		MethodPart methodPart = new MethodPart(methodName, void.class, parameterPart);
+		methodPart.setContents(contents);
+		return methodPart;
+	}
+
 	public static ClassType generateConverter(Class<?> source, Class<?> target, String packageName, String paramName) {
 		//
 		ConverterGenerator converterGenerator = new ConverterGenerator(target, source, paramName, PropertyCollectingType.DECLARED_FIELD);
@@ -86,10 +113,8 @@ public class Tools {
 		ClassType classType = new ClassType();
 		classType.setPackageName(packageName);
 		classType.setName(String.format("%sTo%sConverter", capitalize(source.getSimpleName()), capitalize(target.getSimpleName())));
-		classType.setMethodParts(Lists.newArrayList(methodPart));
-		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
-		interfaces.add(ClassWrapper.of(Converter.class, source, target));
-		classType.setInterfaces(interfaces);
+		classType.addMethodPart(methodPart);
+		classType.addInterface(ClassWrapper.of(Converter.class, source, target));
 		return classType;
 	}
 
@@ -105,10 +130,8 @@ public class Tools {
 		ClassType classType = new ClassType();
 		classType.setPackageName(packageName);
 		classType.setName(String.format("%sBuilder", capitalize(target.getSimpleName())));
-		classType.setMethodParts(Lists.newArrayList(methodPart));
-		LinkedHashSet<ClassWrapper> interfaces = Sets.newLinkedHashSet();
-		interfaces.add(ClassWrapper.of(Builder.class, target));
-		classType.setInterfaces(interfaces);
+		classType.addMethodPart(methodPart);
+		classType.addInterface(ClassWrapper.of(Builder.class, target));
 		return classType;
 	}
 

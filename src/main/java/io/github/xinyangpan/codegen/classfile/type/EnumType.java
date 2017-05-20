@@ -1,23 +1,20 @@
 package io.github.xinyangpan.codegen.classfile.type;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import io.github.xinyangpan.codegen.classfile.Type;
-import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.core.Import;
 import io.github.xinyangpan.codegen.core.template.TemplateType;
 
 public class EnumType extends AbstractType {
 
 	private List<String> values;
-	private LinkedHashSet<ClassWrapper> interfaces;
 
 	public EnumType() {
 		this.type = Type.ENUM;
 	}
-	
+
 	@Override
 	public TemplateType templateType() {
 		return TemplateType.ENUM;
@@ -46,14 +43,6 @@ public class EnumType extends AbstractType {
 
 	public void setValues(List<String> values) {
 		this.values = values;
-	}
-
-	public LinkedHashSet<ClassWrapper> getInterfaces() {
-		return interfaces;
-	}
-
-	public void setInterfaces(LinkedHashSet<ClassWrapper> interfaces) {
-		this.interfaces = interfaces;
 	}
 
 }
