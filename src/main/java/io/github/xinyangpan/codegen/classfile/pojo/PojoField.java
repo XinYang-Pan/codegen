@@ -43,7 +43,7 @@ public class PojoField {
 	public MethodPart getWriterMethod() {
 		String methodName = String.format("set%s", StringUtils.capitalize(name));
 		ParameterPart parameterPart = new ParameterPart(type, name);
-		MethodPart methodPart = new MethodPart(methodName, ClassWrapper.of(void.class), parameterPart);
+		MethodPart methodPart = new MethodPart(methodName, void.class, parameterPart);
 		methodPart.setAnnotationWrappers(annotationWrapperMap.get(AnnotationType.Get));
 		methodPart.setContents(Lists.newArrayList(String.format("this.%s = %s;", name, parameterPart.getName())));
 		return methodPart;

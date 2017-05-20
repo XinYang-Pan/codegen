@@ -19,7 +19,7 @@ public abstract class CodeGenUtils {
 	public static List<FieldPart> getFieldParts(Class<?> clazz, PropertyCollectingType propertyCollectingType) {
 		List<PropertyDescriptor> propertyDescriptors = propertyCollectingType.getPropertyDescriptors(clazz);
 		return propertyDescriptors.stream()
-				.map(pd -> new FieldPart(ClassWrapper.of(pd.getPropertyType()), pd.getName()))
+				.map(pd -> new FieldPart(pd.getPropertyType(), pd.getName()))
 				.collect(Collectors.toList());
 	}
 

@@ -30,6 +30,13 @@ public class MethodPart extends ClassDeclarePart {
 		this.parameters = Lists.newArrayList(parameters);
 	}
 
+	public MethodPart(String name, Class<?> returnType, ParameterPart... parameters) {
+		this();
+		this.setName(name);
+		this.setType(ClassWrapper.of(returnType));
+		this.parameters = Lists.newArrayList(parameters);
+	}
+
 	@Override
 	public TemplateType templateType() {
 		return TemplateType.METHOD;

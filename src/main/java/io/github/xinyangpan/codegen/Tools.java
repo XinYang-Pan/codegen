@@ -47,7 +47,7 @@ public class Tools {
 			contents.add("return super.toString();");
 		}
 		//
-		MethodPart methodPart = new MethodPart("toString", ClassWrapper.of(String.class));
+		MethodPart methodPart = new MethodPart("toString", String.class);
 		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		return methodPart;
@@ -67,7 +67,7 @@ public class Tools {
 		}
 		contents.add("return copy;");
 		//
-		MethodPart methodPart = new MethodPart("copy", ClassWrapper.of(clazz));
+		MethodPart methodPart = new MethodPart("copy", clazz);
 		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		return methodPart;
@@ -78,7 +78,7 @@ public class Tools {
 		ConverterGenerator converterGenerator = new ConverterGenerator(target, source, paramName, PropertyCollectingType.DECLARED_FIELD);
 		List<String> contents = converterGenerator.contents();
 		//
-		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(target), new ParameterPart(source, converterGenerator.getSourceParamName()));
+		MethodPart methodPart = new MethodPart("convert", target, new ParameterPart(source, converterGenerator.getSourceParamName()));
 		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		//
@@ -97,7 +97,7 @@ public class Tools {
 		BuilderGenerator builderGenerator = new BuilderGenerator(target, null, PropertyCollectingType.DECLARED_FIELD);
 		List<String> contents = builderGenerator.contents();
 		//
-		MethodPart methodPart = new MethodPart("build", ClassWrapper.of(target));
+		MethodPart methodPart = new MethodPart("build", target);
 		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		//

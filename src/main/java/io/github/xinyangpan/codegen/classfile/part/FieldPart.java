@@ -15,9 +15,15 @@ public class FieldPart extends ClassDeclarePart {
 		return TemplateType.FIELD;
 	}
 
-	public FieldPart(ClassWrapper type, String name) {
+	public FieldPart(ClassWrapper classWrapper, String name) {
 		this();
-		this.type = type;
+		this.type = classWrapper;
+		this.name = name;
+	}
+
+	public FieldPart(Class<?> type, String name) {
+		this();
+		this.type = ClassWrapper.of(type);
 		this.name = name;
 	}
 

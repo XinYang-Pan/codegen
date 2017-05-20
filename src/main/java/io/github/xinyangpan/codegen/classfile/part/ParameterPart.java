@@ -1,9 +1,9 @@
 package io.github.xinyangpan.codegen.classfile.part;
 
-import java.util.List;
-
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
+
+import java.util.List;
 
 public class ParameterPart extends ClassPart {
 

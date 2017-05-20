@@ -19,8 +19,8 @@ public class GenerateClassExample {
 
 	public static void main(String[] args) throws Exception {
 		//
-		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(Integer.class), new ParameterPart(String.class, "string"));
-		FieldPart fieldPart = new FieldPart(ClassWrapper.of(int.class), "id");
+		MethodPart methodPart = new MethodPart("convert", Integer.class, new ParameterPart(String.class, "string"));
+		FieldPart fieldPart = new FieldPart(int.class, "id");
 		AnnotationWrapper annotationWrapper = new AnnotationWrapper(SuppressWarnings.class, "(\"unused\")");
 		ArrayList<AnnotationWrapper> newArrayList = Lists.newArrayList(annotationWrapper);
 		fieldPart.setAnnotationWrappers(newArrayList);
