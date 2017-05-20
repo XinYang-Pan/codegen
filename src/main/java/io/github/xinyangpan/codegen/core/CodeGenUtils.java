@@ -1,13 +1,13 @@
 package io.github.xinyangpan.codegen.core;
 
-import io.github.xinyangpan.codegen.classfile.part.FieldPart;
-import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
-import io.github.xinyangpan.commons.PropertyCollectingType;
-import org.apache.commons.lang3.StringUtils;
-
 import java.beans.PropertyDescriptor;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+
+import io.github.xinyangpan.codegen.classfile.part.FieldPart;
+import io.github.xinyangpan.commons.PropertyCollectingType;
 
 public abstract class CodeGenUtils {
 
