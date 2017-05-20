@@ -2,13 +2,10 @@ package io.github.xinyangpan.codegen.classfile.pojo;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
@@ -16,26 +13,21 @@ import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
 import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 
-public class PojoField {
+public class PojoField extends FieldPart {
 	public enum AnnotationType {
 		Field, Get, Set
 	}
 
 	private String name;
 	private ClassWrapper type;
-	private Map<AnnotationType, List<AnnotationWrapper>> annotationWrapperMap;
-
-	public FieldPart getFieldPart() {
-		FieldPart fieldPart = new FieldPart(type, name);
-		fieldPart.setAnnotationWrappers(annotationWrapperMap.get(AnnotationType.Field));
-		return fieldPart;
-	}
+	private final List<AnnotationWrapper> getterAnnotationWrappers = Lists.newArrayList();
+	private final List<AnnotationWrapper> setterAnnotationWrappers = Lists.newArrayList();
 
 	public MethodPart getReadMethod() {
 		String prefix = boolean.class == type.getClassIfPossible() ? "is" : "get";
 		String methodName = String.format("%s%s", prefix, StringUtils.capitalize(name));
 		MethodPart methodPart = new MethodPart(methodName, type);
-		methodPart.setAnnotationWrappers(annotationWrapperMap.get(AnnotationType.Get));
+		methodPart.setAnnotationWrappers(getterAnnotationWrappers);
 		methodPart.setContents(Lists.newArrayList(String.format("return this.%s;", name)));
 		return methodPart;
 	}
@@ -44,29 +36,9 @@ public class PojoField {
 		String methodName = String.format("set%s", StringUtils.capitalize(name));
 		ParameterPart parameterPart = new ParameterPart(type, name);
 		MethodPart methodPart = new MethodPart(methodName, void.class, parameterPart);
-		methodPart.setAnnotationWrappers(annotationWrapperMap.get(AnnotationType.Set));
+		methodPart.setAnnotationWrappers(setterAnnotationWrappers);
 		methodPart.setContents(Lists.newArrayList(String.format("this.%s = %s;", name, parameterPart.getName())));
 		return methodPart;
-	}
-
-	public PojoField addAnnotation(AnnotationType annotationType, Class<? extends Annotation> annotation) {
-		Preconditions.checkNotNull(annotationType);
-		Preconditions.checkNotNull(annotation);
-		// 
-		AnnotationWrapper wrapper = new AnnotationWrapper(annotation);
-		this.addAnnotationWrapper(annotationType, wrapper);
-		return this;
-	}
-
-	public void addAnnotationWrapper(AnnotationType annotationType, AnnotationWrapper annotationWrapper) {
-		Preconditions.checkNotNull(annotationType);
-		Preconditions.checkNotNull(annotationWrapper);
-		// 
-		if (annotationWrapperMap == null) {
-			annotationWrapperMap = Maps.newHashMap();
-		}
-		annotationWrapperMap.putIfAbsent(annotationType, Lists.newArrayList());
-		annotationWrapperMap.get(annotationType).add(annotationWrapper);
 	}
 
 	// --------------------------------------
@@ -93,10 +65,6 @@ public class PojoField {
 		this.name = name;
 	}
 
-	public Map<AnnotationType, List<AnnotationWrapper>> getAnnotationWrapperMap() {
-		return annotationWrapperMap;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -104,10 +72,80 @@ public class PojoField {
 		builder.append(name);
 		builder.append(", type=");
 		builder.append(type);
-		builder.append(", annotationWrapperMap=");
-		builder.append(annotationWrapperMap);
+		builder.append(", getterAnnotationWrappers=");
+		builder.append(getterAnnotationWrappers);
+		builder.append(", setterAnnotationWrappers=");
+		builder.append(setterAnnotationWrappers);
+		builder.append(", accessModifier=");
+		builder.append(accessModifier);
+		builder.append(", isStatic=");
+		builder.append(isStatic);
+		builder.append(", annotationWrappers=");
+		builder.append(annotationWrappers);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	public List<AnnotationWrapper> getGetterAnnotationWrappers() {
+		return getterAnnotationWrappers;
+	}
+
+	public List<AnnotationWrapper> getSetterAnnotationWrappers() {
+		return setterAnnotationWrappers;
+	}
+
+	public void addGetterAnnotationWrapper(AnnotationWrapper getterAnnotationWrapper) {
+		this.getterAnnotationWrappers.add(getterAnnotationWrapper);
+	}
+
+	public void addGetterAnnotationWrappers(AnnotationWrapper... getterAnnotationWrappers) {
+		if (getterAnnotationWrappers == null) {
+			return;
+		}
+		for (AnnotationWrapper getterAnnotationWrapper : getterAnnotationWrappers) {
+			this.getterAnnotationWrappers.add(getterAnnotationWrapper);
+		}
+	}
+
+	public void addGetterAnnotation(Class<? extends Annotation> setterAnnotation) {
+		this.addGetterAnnotationWrapper(new AnnotationWrapper(setterAnnotation));
+	}
+	
+	@SafeVarargs
+	public final void addGetterAnnotations(Class<? extends Annotation>... setterAnnotations) {
+		if (setterAnnotations == null) {
+			return;
+		}
+		for (Class<? extends Annotation> setterAnnotation : setterAnnotations) {
+			this.addGetterAnnotation(setterAnnotation);
+		}
+	}
+
+	public void addSetterAnnotationWrapper(AnnotationWrapper setterAnnotationWrapper) {
+		this.setterAnnotationWrappers.add(setterAnnotationWrapper);
+	}
+
+	public void addSetterAnnotationWrappers(AnnotationWrapper... setterAnnotationWrappers) {
+		if (setterAnnotationWrappers == null) {
+			return;
+		}
+		for (AnnotationWrapper setterAnnotationWrapper : setterAnnotationWrappers) {
+			this.setterAnnotationWrappers.add(setterAnnotationWrapper);
+		}
+	}
+
+	public void addSetterAnnotation(Class<? extends Annotation> setterAnnotation) {
+		this.addSetterAnnotationWrapper(new AnnotationWrapper(setterAnnotation));
+	}
+	
+	@SafeVarargs
+	public final void addSetterAnnotations(Class<? extends Annotation>... setterAnnotations) {
+		if (setterAnnotations == null) {
+			return;
+		}
+		for (Class<? extends Annotation> setterAnnotation : setterAnnotations) {
+			this.addSetterAnnotation(setterAnnotation);
+		}
+	}
+	
 }

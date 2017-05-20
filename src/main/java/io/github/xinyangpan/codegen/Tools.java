@@ -15,7 +15,6 @@ import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
 import io.github.xinyangpan.codegen.classfile.part.ParameterPart;
 import io.github.xinyangpan.codegen.classfile.type.ClassType;
-import io.github.xinyangpan.codegen.classfile.wrapper.AnnotationWrapper;
 import io.github.xinyangpan.codegen.classfile.wrapper.ClassWrapper;
 import io.github.xinyangpan.codegen.converter.ConverterGenerator;
 import io.github.xinyangpan.codegen.core.CodeGenUtils;
@@ -49,7 +48,7 @@ public class Tools {
 		}
 		//
 		MethodPart methodPart = new MethodPart("toString", String.class);
-		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.addAnnotation(Override.class);
 		methodPart.setContents(contents);
 		return methodPart;
 	}
@@ -69,16 +68,21 @@ public class Tools {
 		contents.add("return copy;");
 		//
 		MethodPart methodPart = new MethodPart("copy", clazz);
-		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.addAnnotation(Override.class);
 		methodPart.setContents(contents);
 		return methodPart;
 	}
 
 	public static MethodPart generateAddForListField(Class<?> type, String fieldName, String singular) {
 		String methodName = String.format("add%s", capitalize(singular));
-		String content = String.format("this.%s.add(%s);", fieldName, singular);
+		List<String> contents = Lists.newArrayList();
+		contents.add(CodeGenUtils.format(0, "if (this.%s == null) {", fieldName));
+		contents.add(CodeGenUtils.format(1, "this.%s = Lists.newArrayList();", fieldName));
+		contents.add(CodeGenUtils.format(0, "}"));
+		contents.add(CodeGenUtils.format(0, "this.%s.add(%s);", fieldName, singular));
+		// 
 		MethodPart methodPart = new MethodPart(methodName, void.class, new ParameterPart(type, singular));
-		methodPart.setContents(Lists.newArrayList(content));
+		methodPart.setContents(contents);
 		return methodPart;
 	}
 
@@ -90,7 +94,7 @@ public class Tools {
 		contents.add(CodeGenUtils.format(1, "return;"));
 		contents.add(CodeGenUtils.format(0, "}"));
 		contents.add(CodeGenUtils.format(0, "for (%s %s : %s) {", type.getSimpleName(), singular, fieldName));
-		contents.add(CodeGenUtils.format(1, "this.%s.add(%s);", fieldName, singular));
+		contents.add(CodeGenUtils.format(1, "this.add%s(%s);", capitalize(singular), singular));
 		contents.add(CodeGenUtils.format(0, "}"));
 		//
 		ParameterPart parameterPart = new ParameterPart(type, fieldName);
@@ -106,7 +110,7 @@ public class Tools {
 		List<String> contents = converterGenerator.contents();
 		//
 		MethodPart methodPart = new MethodPart("convert", target, new ParameterPart(source, converterGenerator.getSourceParamName()));
-		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.addAnnotation(Override.class);
 		methodPart.setContents(contents);
 		//
 		ClassType classType = new ClassType();
@@ -123,7 +127,7 @@ public class Tools {
 		List<String> contents = builderGenerator.contents();
 		//
 		MethodPart methodPart = new MethodPart("build", target);
-		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.addAnnotation(Override.class);
 		methodPart.setContents(contents);
 		//
 		ClassType classType = new ClassType();

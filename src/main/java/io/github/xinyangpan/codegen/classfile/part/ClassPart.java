@@ -2,6 +2,7 @@ package io.github.xinyangpan.codegen.classfile.part;
 
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class ClassPart implements Import {
 
 	protected ClassWrapper type;
 	protected String name;
-	protected List<? extends AnnotationWrapper> annotationWrappers;
+	protected List<AnnotationWrapper> annotationWrappers;
 
 	// -----------------------------
 	// ----- Constructors
@@ -35,7 +36,7 @@ public class ClassPart implements Import {
 		this.name = name;
 	}
 
-	public ClassPart(ClassWrapper type, String name, List<? extends AnnotationWrapper> annotationWrappers) {
+	public ClassPart(ClassWrapper type, String name, List<AnnotationWrapper> annotationWrappers) {
 		super();
 		this.type = type;
 		this.name = name;
@@ -89,12 +90,41 @@ public class ClassPart implements Import {
 		this.type = type;
 	}
 
-	public List<? extends AnnotationWrapper> getAnnotationWrappers() {
+	public List<AnnotationWrapper> getAnnotationWrappers() {
 		return annotationWrappers;
 	}
 
-	public void setAnnotationWrappers(List<? extends AnnotationWrapper> annotationWrappers) {
+	public void setAnnotationWrappers(List<AnnotationWrapper> annotationWrappers) {
 		this.annotationWrappers = annotationWrappers;
 	}
 
+	public void addAnnotationWrapper(AnnotationWrapper annotationWrapper) {
+		if (this.annotationWrappers == null) {
+			this.annotationWrappers = Lists.newArrayList();
+		}
+		this.annotationWrappers.add(annotationWrapper);
+	}
+
+	public void addAnnotationWrappers(AnnotationWrapper... annotationWrappers) {
+		if (annotationWrappers == null) {
+			return;
+		}
+		for (AnnotationWrapper annotationWrapper : annotationWrappers) {
+			this.addAnnotationWrapper(annotationWrapper);
+		}
+	}
+
+	public void addAnnotation(Class<? extends Annotation> annotation) {
+		this.addAnnotationWrapper(new AnnotationWrapper(annotation));
+	}
+
+	@SafeVarargs
+	public final void addAnnotations(Class<? extends Annotation>... annotations) {
+		if (annotations == null) {
+			return;
+		}
+		for (Class<? extends Annotation> annotation : annotations) {
+			this.addAnnotation(annotation);
+		}
+	}
 }

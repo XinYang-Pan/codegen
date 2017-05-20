@@ -1,10 +1,6 @@
 package example;
 
-import java.util.ArrayList;
-
 import org.springframework.core.convert.converter.Converter;
-
-import com.google.common.collect.Lists;
 
 import io.github.xinyangpan.codegen.classfile.part.FieldPart;
 import io.github.xinyangpan.codegen.classfile.part.MethodPart;
@@ -19,9 +15,7 @@ public class GenerateClassExample {
 		//
 		MethodPart methodPart = new MethodPart("convert", Integer.class, new ParameterPart(String.class, "string"));
 		FieldPart fieldPart = new FieldPart(int.class, "id");
-		AnnotationWrapper annotationWrapper = new AnnotationWrapper(SuppressWarnings.class, "(\"unused\")");
-		ArrayList<AnnotationWrapper> newArrayList = Lists.newArrayList(annotationWrapper);
-		fieldPart.setAnnotationWrappers(newArrayList);
+		fieldPart.addAnnotationWrapper(new AnnotationWrapper(SuppressWarnings.class, "(\"unused\")"));
 		//
 		ClassType classType = new ClassType();
 		classType.setPackageName("io.github.xinyangpan.test");

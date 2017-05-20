@@ -20,7 +20,7 @@ public class ClassType extends AbstractType {
 	}
 
 	public void addPojoField(PojoField pojoField) {
-		this.fieldParts.add(pojoField.getFieldPart());
+		this.fieldParts.add(pojoField);
 		this.methodParts.add(pojoField.getReadMethod());
 		this.methodParts.add(pojoField.getWriterMethod());
 	}

@@ -20,7 +20,7 @@ public class ParameterPart extends ClassPart {
 		super(type, name);
 	}
 
-	public ParameterPart(ClassWrapper type, String name, List<? extends AnnotationWrapper> annotationWrapper) {
+	public ParameterPart(ClassWrapper type, String name, List<AnnotationWrapper> annotationWrapper) {
 		super(type, name, annotationWrapper);
 	}
 
