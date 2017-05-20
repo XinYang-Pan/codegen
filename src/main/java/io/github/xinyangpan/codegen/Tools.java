@@ -5,7 +5,6 @@ import static org.apache.commons.lang3.StringUtils.capitalize;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
 import org.springframework.core.convert.converter.Converter;
 
@@ -76,7 +75,7 @@ public class Tools {
 	}
 
 	public static MethodPart generateAddForListField(Class<?> type, String fieldName, String singular) {
-		String methodName = String.format("add%s", StringUtils.capitalize(singular));
+		String methodName = String.format("add%s", capitalize(singular));
 		String content = String.format("this.%s.add(%s);", fieldName, singular);
 		MethodPart methodPart = new MethodPart(methodName, void.class, new ParameterPart(type, singular));
 		methodPart.setContents(Lists.newArrayList(content));
@@ -84,7 +83,7 @@ public class Tools {
 	}
 
 	public static MethodPart generateAddsForListField(Class<?> type, String fieldName, String singular) {
-		String methodName = String.format("add%s", StringUtils.capitalize(fieldName));
+		String methodName = String.format("add%s", capitalize(fieldName));
 		//
 		List<String> contents = Lists.newArrayList();
 		contents.add(CodeGenUtils.format(0, "if (%s == null) {", fieldName));
