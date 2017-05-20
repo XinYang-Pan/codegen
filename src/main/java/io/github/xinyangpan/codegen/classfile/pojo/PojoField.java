@@ -44,7 +44,7 @@ public class PojoField {
 		String methodName = String.format("set%s", StringUtils.capitalize(name));
 		ParameterPart parameterPart = new ParameterPart(type, name);
 		MethodPart methodPart = new MethodPart(methodName, void.class, parameterPart);
-		methodPart.setAnnotationWrappers(annotationWrapperMap.get(AnnotationType.Get));
+		methodPart.setAnnotationWrappers(annotationWrapperMap.get(AnnotationType.Set));
 		methodPart.setContents(Lists.newArrayList(String.format("this.%s = %s;", name, parameterPart.getName())));
 		return methodPart;
 	}
@@ -65,7 +65,8 @@ public class PojoField {
 		if (annotationWrapperMap == null) {
 			annotationWrapperMap = Maps.newHashMap();
 		}
-		annotationWrapperMap.putIfAbsent(annotationType, Lists.newArrayList()).add(annotationWrapper);
+		annotationWrapperMap.putIfAbsent(annotationType, Lists.newArrayList());
+		annotationWrapperMap.get(annotationType).add(annotationWrapper);
 	}
 
 	// --------------------------------------
