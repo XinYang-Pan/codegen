@@ -1,5 +1,5 @@
 package ${packageName};
-<#if imports??>
+<#if imports?has_content>
 
 <#list imports as class>
 import ${class.name};
