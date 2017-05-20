@@ -26,9 +26,7 @@ public class InterfaceType extends AbstractType {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("InterfaceType [interfaces=");
-		builder.append(interfaces);
-		builder.append(", accessModifier=");
+		builder.append("InterfaceType [accessModifier=");
 		builder.append(accessModifier);
 		builder.append(", type=");
 		builder.append(type);
@@ -42,6 +40,8 @@ public class InterfaceType extends AbstractType {
 		builder.append(fieldParts);
 		builder.append(", methodParts=");
 		builder.append(methodParts);
+		builder.append(", interfaces=");
+		builder.append(interfaces);
 		builder.append("]");
 		return builder.toString();
 	}
