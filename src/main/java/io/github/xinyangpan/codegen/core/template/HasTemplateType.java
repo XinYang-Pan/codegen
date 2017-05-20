@@ -1,16 +1,10 @@
 package io.github.xinyangpan.codegen.core.template;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
-
 import freemarker.template.Template;
+
+import java.io.*;
 
 public interface HasTemplateType {
 
@@ -49,7 +43,7 @@ public interface HasTemplateType {
 			Files.createParentDirs(file);
 			fileWriter = new FileWriter(file);
 			this.processTo(fileWriter);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
 			try {
