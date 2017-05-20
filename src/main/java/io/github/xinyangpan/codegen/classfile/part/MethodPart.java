@@ -63,8 +63,8 @@ public class MethodPart extends ClassDeclarePart {
 		builder.append(type);
 		builder.append(", name=");
 		builder.append(name);
-		builder.append(", annotationWrapper=");
-		builder.append(annotationWrapper);
+		builder.append(", annotationWrappers=");
+		builder.append(annotationWrappers);
 		builder.append("]");
 		return builder.toString();
 	}

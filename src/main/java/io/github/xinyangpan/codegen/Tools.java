@@ -48,7 +48,7 @@ public class Tools {
 		}
 		//
 		MethodPart methodPart = new MethodPart("toString", ClassWrapper.of(String.class));
-		methodPart.setAnnotationWrapper(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		return methodPart;
 	}
@@ -60,15 +60,15 @@ public class Tools {
 		String className = clazz.getSimpleName();
 		contents.add(String.format("%s copy = new %s();", className, className));
 		if (CollectionUtils.isNotEmpty(fieldParts)) {
-			for (int i = 0; i < fieldParts.size(); i++) {
-				String name = fieldParts.get(i).getName();
+			for (FieldPart fieldPart : fieldParts) {
+				String name = fieldPart.getName();
 				contents.add(String.format("copy.%s = this.%s;", name, name));
 			}
 		}
 		contents.add("return copy;");
 		//
 		MethodPart methodPart = new MethodPart("copy", ClassWrapper.of(clazz));
-		methodPart.setAnnotationWrapper(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		return methodPart;
 	}
@@ -79,7 +79,7 @@ public class Tools {
 		List<String> contents = converterGenerator.contents();
 		//
 		MethodPart methodPart = new MethodPart("convert", ClassWrapper.of(target), new ParameterPart(source, converterGenerator.getSourceParamName()));
-		methodPart.setAnnotationWrapper(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		//
 		ClassType classType = new ClassType();
@@ -98,7 +98,7 @@ public class Tools {
 		List<String> contents = builderGenerator.contents();
 		//
 		MethodPart methodPart = new MethodPart("build", ClassWrapper.of(target));
-		methodPart.setAnnotationWrapper(Lists.newArrayList(new AnnotationWrapper(Override.class)));
+		methodPart.setAnnotationWrappers(Lists.newArrayList(new AnnotationWrapper(Override.class)));
 		methodPart.setContents(contents);
 		//
 		ClassType classType = new ClassType();

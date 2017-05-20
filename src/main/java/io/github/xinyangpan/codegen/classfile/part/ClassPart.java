@@ -15,7 +15,7 @@ public class ClassPart implements Import {
 
 	protected ClassWrapper type;
 	protected String name;
-	protected List<? extends AnnotationWrapper> annotationWrapper;
+	protected List<? extends AnnotationWrapper> annotationWrappers;
 
 	// -----------------------------
 	// ----- Constructors
@@ -35,11 +35,11 @@ public class ClassPart implements Import {
 		this.name = name;
 	}
 
-	public ClassPart(ClassWrapper type, String name, List<? extends AnnotationWrapper> annotationWrapper) {
+	public ClassPart(ClassWrapper type, String name, List<? extends AnnotationWrapper> annotationWrappers) {
 		super();
 		this.type = type;
 		this.name = name;
-		this.annotationWrapper = annotationWrapper;
+		this.annotationWrappers = annotationWrappers;
 	}
 
 	// -----------------------------
@@ -48,7 +48,7 @@ public class ClassPart implements Import {
 
 	public List<String> getAnnotationTexts() {
 		List<String> annotationTexts = Lists.newArrayList();
-		for (AnnotationWrapper annotationWrapper : emptyIfNull(annotationWrapper)) {
+		for (AnnotationWrapper annotationWrapper : emptyIfNull(annotationWrappers)) {
 			annotationTexts.add(annotationWrapper.getDisplayString());
 		}
 		return annotationTexts;
@@ -57,7 +57,7 @@ public class ClassPart implements Import {
 	@Override
 	public void addImportsTo(Set<Class<?>> targetSet) {
 		Import.toAdd(targetSet, type);
-		Import.toAdd(targetSet, annotationWrapper);
+		Import.toAdd(targetSet, annotationWrappers);
 	}
 
 	@Override
@@ -67,8 +67,8 @@ public class ClassPart implements Import {
 		builder.append(name);
 		builder.append(", type=");
 		builder.append(type);
-		builder.append(", annotationWrapper=");
-		builder.append(annotationWrapper);
+		builder.append(", annotationWrappers=");
+		builder.append(annotationWrappers);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -89,12 +89,12 @@ public class ClassPart implements Import {
 		this.type = type;
 	}
 
-	public List<? extends AnnotationWrapper> getAnnotationWrapper() {
-		return annotationWrapper;
+	public List<? extends AnnotationWrapper> getAnnotationWrappers() {
+		return annotationWrappers;
 	}
 
-	public void setAnnotationWrapper(List<? extends AnnotationWrapper> annotationWrapper) {
-		this.annotationWrapper = annotationWrapper;
+	public void setAnnotationWrappers(List<? extends AnnotationWrapper> annotationWrappers) {
+		this.annotationWrappers = annotationWrappers;
 	}
 
 }

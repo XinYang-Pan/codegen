@@ -23,7 +23,7 @@ public class GenerateClassExample {
 		FieldPart fieldPart = new FieldPart(ClassWrapper.of(int.class), "id");
 		AnnotationWrapper annotationWrapper = new AnnotationWrapper(SuppressWarnings.class, "(\"unused\")");
 		ArrayList<AnnotationWrapper> newArrayList = Lists.newArrayList(annotationWrapper);
-		fieldPart.setAnnotationWrapper(newArrayList);
+		fieldPart.setAnnotationWrappers(newArrayList);
 		//
 		ClassType classType = new ClassType();
 		classType.setPackageName("io.github.xinyangpan.test");
