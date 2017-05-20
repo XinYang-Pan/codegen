@@ -34,8 +34,7 @@ public class Tools {
 
 	public static MethodPart generateToString(List<FieldPart> fieldParts, String classSimpleName) {
 		List<String> contents = Lists.newArrayList();
-		if (CollectionUtils.isNotEmpty(fieldParts))
-		{
+		if (CollectionUtils.isNotEmpty(fieldParts)) {
 			contents.add("StringBuilder builder = new StringBuilder();");
 			contents.add(String.format("builder.append(\"%s [%s=\");", classSimpleName, fieldParts.get(0).getName()));
 			contents.add(String.format("builder.append(%s);", fieldParts.get(0).getName()));
