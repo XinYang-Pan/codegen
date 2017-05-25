@@ -1,4 +1,4 @@
-package io.github.xinyangpan.codegen;
+package io.github.xinyangpan.codegen.tool;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
@@ -71,6 +71,26 @@ public class Tools {
 		methodPart.addAnnotation(Override.class);
 		methodPart.setContents(contents);
 		return methodPart;
+	}
+
+	public static MethodPart generateCopy(List<FieldPart> fieldParts, ClassWrapper classWrapper) {
+		//
+		List<String> contents = Lists.newArrayList();
+		String className = classWrapper.getName();
+		contents.add(String.format("%s copy = new %s();", className, className));
+		if (CollectionUtils.isNotEmpty(fieldParts)) {
+			for (FieldPart fieldPart : fieldParts) {
+				String name = fieldPart.getName();
+				contents.add(String.format("copy.%s = this.%s;", name, name));
+			}
+		}
+		contents.add("return copy;");
+		//
+		MethodPart methodPart = new MethodPart("copy", classWrapper);
+		methodPart.addAnnotation(Override.class);
+		methodPart.setContents(contents);
+		return methodPart;
+		
 	}
 
 	public static MethodPart generateAddForListField(Class<?> type, String fieldName, String singular) {

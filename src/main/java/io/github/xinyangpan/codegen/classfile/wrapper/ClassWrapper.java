@@ -23,7 +23,11 @@ public class ClassWrapper implements Import {
 	ClassWrapper(String clazzFullName, List<ClassWrapper> parameterizedTypes) {
 		this.packageName = Strings.emptyToNull(ClassUtils.getPackageName(clazzFullName));
 		this.name = ClassUtils.getShortClassName(clazzFullName);
-		this.parameterizedTypes = parameterizedTypes;
+		if (parameterizedTypes != null) {
+			this.parameterizedTypes = parameterizedTypes;
+		} else {
+			this.parameterizedTypes = Lists.newArrayList();
+		}
 	}
 
 	// -----------------------------
@@ -188,6 +192,10 @@ public class ClassWrapper implements Import {
 		builder.append(parameterizedTypes);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public List<ClassWrapper> getParameterizedTypes() {
+		return parameterizedTypes;
 	}
 
 }

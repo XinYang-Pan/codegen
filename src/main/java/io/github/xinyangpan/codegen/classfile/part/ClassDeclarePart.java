@@ -7,6 +7,7 @@ public abstract class ClassDeclarePart extends ClassPart implements HasTemplateT
 
 	protected AccessModifier accessModifier;
 	protected boolean isStatic;
+	protected boolean isFinal;
 
 	public AccessModifier getAccessModifier() {
 		return accessModifier;
@@ -22,6 +23,14 @@ public abstract class ClassDeclarePart extends ClassPart implements HasTemplateT
 
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
+	}
+
+	public boolean isFinal() {
+		return isFinal;
+	}
+
+	public void setFinal(boolean isFinal) {
+		this.isFinal = isFinal;
 	}
 
 }

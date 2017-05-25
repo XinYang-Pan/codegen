@@ -6,6 +6,8 @@ import io.github.xinyangpan.codegen.core.template.TemplateType;
 
 public class FieldPart extends ClassDeclarePart {
 
+	private String initValue;
+	
 	public FieldPart() {
 		this.accessModifier = AccessModifier.PRIVATE;
 	}
@@ -25,6 +27,32 @@ public class FieldPart extends ClassDeclarePart {
 		this();
 		this.type = ClassWrapper.of(type);
 		this.name = name;
+	}
+	
+	// -----------------------------
+	// ----- Static Methods
+	// -----------------------------
+
+	public static FieldPart stringConstant(String fieldName, String initValue) {
+		FieldPart fieldPartMeta = new FieldPart(String.class, fieldName);
+		fieldPartMeta.setStatic(true);
+		fieldPartMeta.setFinal(true);
+		fieldPartMeta.setAccessModifier(AccessModifier.PUBLIC);
+		fieldPartMeta.setInitValue(String.format("\"%s\"", initValue));
+		return fieldPartMeta;
+	}
+	
+	
+	// -----------------------------
+	// ----- Get Set ToString HashCode Equals
+	// -----------------------------
+
+	public String getInitValue() {
+		return initValue;
+	}
+
+	public void setInitValue(String initValue) {
+		this.initValue = initValue;
 	}
 
 }

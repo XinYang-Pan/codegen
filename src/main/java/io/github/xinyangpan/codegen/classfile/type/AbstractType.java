@@ -77,6 +77,10 @@ public abstract class AbstractType implements HasTemplateType {
 		return String.format("%s.%s", packageName, name);
 	}
 
+	public ClassWrapper getThisClass() {
+		return ClassWrapper.of(packageName, name);
+	}
+
 	// -----------------------------
 	// ----- Get Set ToString HashCode Equals
 	// -----------------------------

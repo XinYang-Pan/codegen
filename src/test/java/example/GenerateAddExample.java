@@ -1,6 +1,6 @@
 package example;
 
-import io.github.xinyangpan.codegen.Tools;
+import io.github.xinyangpan.codegen.tool.Tools;
 
 public class GenerateAddExample {
 
